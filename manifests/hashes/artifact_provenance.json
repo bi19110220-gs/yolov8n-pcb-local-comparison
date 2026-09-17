@@ -1,0 +1,392 @@
+{
+  "artifacts": [
+    {
+      "destination": "models/official/yolov8n.pt",
+      "normalized": false,
+      "published_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36",
+      "size_bytes": 6549796,
+      "source": "yolov8n.pt",
+      "source_sha256": "f59b3d833e2ff32e194b5bb8e08d211dc7c5bdf144b90d2c8412c47ccfc83b36"
+    },
+    {
+      "destination": "configs/trial044_gpu_adaptation/historical_cpu_trial044.json",
+      "normalized": true,
+      "published_sha256": "78853885a876e7bdfb8f55533daf08e6d9ba152fdfa4e8a1221395f5b1410398",
+      "size_bytes": 4644,
+      "source": "results/top5_20_percent/configs/top5_20_044_parent035_classification_head_cls140_cpu_1024.json",
+      "source_sha256": "8a2b5bdd0e1a5dc5c6f15623c72b0b022e2dccf946e3368fbbebd8bd64a1afe8"
+    },
+    {
+      "destination": "models/trial035_parent/best.pt",
+      "normalized": false,
+      "published_sha256": "073692d72d506d42bb5f4a995b1b36d55b5e8002e748e44b85b3fefdece8e5bd",
+      "size_bytes": 6329386,
+      "source": "results/top5_20_percent/runs/top5_20_035_parent029_classification_head_cls120_cpu_1024/weights/best.pt",
+      "source_sha256": "073692d72d506d42bb5f4a995b1b36d55b5e8002e748e44b85b3fefdece8e5bd"
+    },
+    {
+      "destination": "configs/trial035_parent/historical_cpu_trial035.json",
+      "normalized": true,
+      "published_sha256": "5153b77e9001880bfaef715445cd8d2ff68a4bd5da342b90b67961c0838b0e5a",
+      "size_bytes": 4340,
+      "source": "results/top5_20_percent/configs/top5_20_035_parent029_classification_head_cls120_cpu_1024.json",
+      "source_sha256": "876bcac18bf8549dce3239e0eb0cea66557a816b1a9568d520c1915ec1c51b7f"
+    },
+    {
+      "destination": "manifests/dataset/authority/authority_record.json",
+      "normalized": true,
+      "published_sha256": "603e89a822ad598e5deea0f08b8acbdea5ec14fff49b546a7a016a3dc17e6033",
+      "size_bytes": 1057,
+      "source": "authority/authority_record.json",
+      "source_sha256": "1f1c60be02f526da9856b43e8783956451e2f8fb7b72bfb625fcff47abd90cd0"
+    },
+    {
+      "destination": "manifests/dataset/authority/enhanced_trial044_validation_only.yaml",
+      "normalized": true,
+      "published_sha256": "f0644119db08407008f678bdad1aeeb4741c28b11f47ed68b60b354f9f2c1c19",
+      "size_bytes": 275,
+      "source": "authority/enhanced_trial044_validation_only.yaml",
+      "source_sha256": "82ba6a8459c8df88c571d188ad3a437dc054d5774dc0f14e78afe00321f9ada6"
+    },
+    {
+      "destination": "manifests/dataset/authority/original_grouped_v1_validation_only.yaml",
+      "normalized": true,
+      "published_sha256": "71004c3f9e2fdde36c9f546ac039b89dde24b2b0ff7cb6f85fd768dd0f0fd339",
+      "size_bytes": 266,
+      "source": "authority/original_grouped_v1_validation_only.yaml",
+      "source_sha256": "16b9a8076257ef55839b3fef1e7ae37350bc2ccec7a51536b597de2ca51a190a"
+    },
+    {
+      "destination": "configs/runtime/enhanced_trial044_gpu_adaptation.json",
+      "normalized": true,
+      "published_sha256": "74f436530c20c096eaa058787c6a1118237b7bf2cd7ec992cdfc37d36da9e769",
+      "size_bytes": 1367,
+      "source": "configs/enhanced_trial044_gpu_adaptation.json",
+      "source_sha256": "777445816901fe363dbba928dda32b1eab28150c9609c88d3f12156d851f8e33"
+    },
+    {
+      "destination": "configs/runtime/original_train_args.json",
+      "normalized": true,
+      "published_sha256": "3f7cb6acc60a80c45059bf0f55aa1bf794b4daa0a586da967d1399a3d3e3742c",
+      "size_bytes": 916,
+      "source": "configs/original_train_args.json",
+      "source_sha256": "3504dc81117a8826553a6267052c07f00361f7d22d83a1845c486d6e6c35dfea"
+    },
+    {
+      "destination": "results/metrics/enhanced_clean_validation.json",
+      "normalized": true,
+      "published_sha256": "284d0c3edffa96b1f6bcfd7b1e74ef1ba4239fa4e157cade98f8a516bee8f976",
+      "size_bytes": 3936,
+      "source": "metrics/enhanced_clean_validation.json",
+      "source_sha256": "263ed9e24b9dfcebe43d1f9c1a616ff679188ef23ec354d621beee27619a9e62"
+    },
+    {
+      "destination": "results/metrics/original_clean_validation.json",
+      "normalized": true,
+      "published_sha256": "44f13bacdd307330da89b381c75e8a67c1e737c7d0b749c50b6f8e3985c191fe",
+      "size_bytes": 2622,
+      "source": "metrics/original_clean_validation.json",
+      "source_sha256": "0cf9d6434469d81c65872e2d4ea1ecd8b7017fec892e4b44c36acb129220caa4"
+    },
+    {
+      "destination": "results/original/training/args.yaml",
+      "normalized": true,
+      "published_sha256": "cb1d5d4268a69de57e592882bbdf5963ea437f1caaeb2cea7f57fcff2fbf0f81",
+      "size_bytes": 1741,
+      "source": "runs/original_grouped_v1_yolov8n/args.yaml",
+      "source_sha256": "0b99aa75b3d9813740d9b0d4524f92b280b5674372cfd9b5ebee3e559da4ba92"
+    },
+    {
+      "destination": "results/original/training/BoxF1_curve.png",
+      "normalized": false,
+      "published_sha256": "93c72864eba78b64ca54762092088ca4a2c920f086b046b2e66015e35f76e8d8",
+      "size_bytes": 179354,
+      "source": "runs/original_grouped_v1_yolov8n/BoxF1_curve.png",
+      "source_sha256": "93c72864eba78b64ca54762092088ca4a2c920f086b046b2e66015e35f76e8d8"
+    },
+    {
+      "destination": "results/original/training/BoxP_curve.png",
+      "normalized": false,
+      "published_sha256": "dd060f4dd06df4671fa711c037d0e7791045b7b1d50e44ae07539bce14ff8571",
+      "size_bytes": 129327,
+      "source": "runs/original_grouped_v1_yolov8n/BoxP_curve.png",
+      "source_sha256": "dd060f4dd06df4671fa711c037d0e7791045b7b1d50e44ae07539bce14ff8571"
+    },
+    {
+      "destination": "results/original/training/BoxPR_curve.png",
+      "normalized": false,
+      "published_sha256": "b978f5c69744eb5aa58e35c3c8bcf7d2becbbf0f00d1d3a70d59425300f33dd4",
+      "size_bytes": 128426,
+      "source": "runs/original_grouped_v1_yolov8n/BoxPR_curve.png",
+      "source_sha256": "b978f5c69744eb5aa58e35c3c8bcf7d2becbbf0f00d1d3a70d59425300f33dd4"
+    },
+    {
+      "destination": "results/original/training/BoxR_curve.png",
+      "normalized": false,
+      "published_sha256": "5d6900d04f25e55cbfd66c9958965636288d3bff7575b23d0bf795933a3250ae",
+      "size_bytes": 173967,
+      "source": "runs/original_grouped_v1_yolov8n/BoxR_curve.png",
+      "source_sha256": "5d6900d04f25e55cbfd66c9958965636288d3bff7575b23d0bf795933a3250ae"
+    },
+    {
+      "destination": "results/original/training/confusion_matrix.png",
+      "normalized": false,
+      "published_sha256": "bff9b8908a6a54b764d2107718e22e1a281c140955171ac1def4c8ae46e7a2ec",
+      "size_bytes": 176821,
+      "source": "runs/original_grouped_v1_yolov8n/confusion_matrix.png",
+      "source_sha256": "bff9b8908a6a54b764d2107718e22e1a281c140955171ac1def4c8ae46e7a2ec"
+    },
+    {
+      "destination": "results/original/training/confusion_matrix_normalized.png",
+      "normalized": false,
+      "published_sha256": "0af8c587d69a0878a0981a45d7a9fd0e16e30ad0fce048762b1bcee8a831820d",
+      "size_bytes": 179511,
+      "source": "runs/original_grouped_v1_yolov8n/confusion_matrix_normalized.png",
+      "source_sha256": "0af8c587d69a0878a0981a45d7a9fd0e16e30ad0fce048762b1bcee8a831820d"
+    },
+    {
+      "destination": "results/original/training/labels.jpg",
+      "normalized": false,
+      "published_sha256": "4826d341e6c25f7a0e18f98ab9fa824b028ac82c58a36492d9527b153bb31aec",
+      "size_bytes": 162624,
+      "source": "runs/original_grouped_v1_yolov8n/labels.jpg",
+      "source_sha256": "4826d341e6c25f7a0e18f98ab9fa824b028ac82c58a36492d9527b153bb31aec"
+    },
+    {
+      "destination": "results/original/training/results.csv",
+      "normalized": true,
+      "published_sha256": "2951aaf273da7adf5779b539d30167e8d210319e1f5a00de7873af64f4d64202",
+      "size_bytes": 12106,
+      "source": "runs/original_grouped_v1_yolov8n/results.csv",
+      "source_sha256": "50276e0496077107337585e321bef1c8ea5659d016b5ccc2e32d5a53019571cd"
+    },
+    {
+      "destination": "results/original/training/results.png",
+      "normalized": false,
+      "published_sha256": "230f6f00e7f64b0ce99d8695b25e57f12adf9473ceeaef27888564bf5044b9a4",
+      "size_bytes": 235480,
+      "source": "runs/original_grouped_v1_yolov8n/results.png",
+      "source_sha256": "230f6f00e7f64b0ce99d8695b25e57f12adf9473ceeaef27888564bf5044b9a4"
+    },
+    {
+      "destination": "results/original/training/train_batch0.jpg",
+      "normalized": false,
+      "published_sha256": "7917cd97b45df2f9d89052fd020c0c7abf3e193aef3489d53f87444a5a10afc4",
+      "size_bytes": 585116,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch0.jpg",
+      "source_sha256": "7917cd97b45df2f9d89052fd020c0c7abf3e193aef3489d53f87444a5a10afc4"
+    },
+    {
+      "destination": "results/original/training/train_batch1.jpg",
+      "normalized": false,
+      "published_sha256": "510105454512ff3eec868d56bd6ac81416e3907b50a3156549b270de491149e5",
+      "size_bytes": 600130,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch1.jpg",
+      "source_sha256": "510105454512ff3eec868d56bd6ac81416e3907b50a3156549b270de491149e5"
+    },
+    {
+      "destination": "results/original/training/train_batch2.jpg",
+      "normalized": false,
+      "published_sha256": "e0a23c4e39610b6b2ee85b73f1dcb5f16d9a9e1561930c3eee395d0d4fdbe6e2",
+      "size_bytes": 603194,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch2.jpg",
+      "source_sha256": "e0a23c4e39610b6b2ee85b73f1dcb5f16d9a9e1561930c3eee395d0d4fdbe6e2"
+    },
+    {
+      "destination": "results/original/training/train_batch24300.jpg",
+      "normalized": false,
+      "published_sha256": "cb5065970bff79dd8f9bd284cd00491dfde8785ec6cfc2de14f21e9ca385f74e",
+      "size_bytes": 492979,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch24300.jpg",
+      "source_sha256": "cb5065970bff79dd8f9bd284cd00491dfde8785ec6cfc2de14f21e9ca385f74e"
+    },
+    {
+      "destination": "results/original/training/train_batch24301.jpg",
+      "normalized": false,
+      "published_sha256": "744da8c61d10647bd6a61a0b369d61427b84dea1b830fde9a5725fa5cdb436e4",
+      "size_bytes": 530810,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch24301.jpg",
+      "source_sha256": "744da8c61d10647bd6a61a0b369d61427b84dea1b830fde9a5725fa5cdb436e4"
+    },
+    {
+      "destination": "results/original/training/train_batch24302.jpg",
+      "normalized": false,
+      "published_sha256": "4bf9d9c7f038af34c683072c9b2f747f857901848f46227ae0026cc3b2baacbb",
+      "size_bytes": 473555,
+      "source": "runs/original_grouped_v1_yolov8n/train_batch24302.jpg",
+      "source_sha256": "4bf9d9c7f038af34c683072c9b2f747f857901848f46227ae0026cc3b2baacbb"
+    },
+    {
+      "destination": "results/original/training/val_batch0_labels.jpg",
+      "normalized": false,
+      "published_sha256": "f9cf88c6850f7d55c260916a21f5d296c8e2b79764aafea37f0ee27444e79f3b",
+      "size_bytes": 728227,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch0_labels.jpg",
+      "source_sha256": "f9cf88c6850f7d55c260916a21f5d296c8e2b79764aafea37f0ee27444e79f3b"
+    },
+    {
+      "destination": "results/original/training/val_batch0_pred.jpg",
+      "normalized": false,
+      "published_sha256": "7b73cc49ac67fa391af5ef333a1934cf19a8842bc9b1dd77c408a8b979b04646",
+      "size_bytes": 742964,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch0_pred.jpg",
+      "source_sha256": "7b73cc49ac67fa391af5ef333a1934cf19a8842bc9b1dd77c408a8b979b04646"
+    },
+    {
+      "destination": "results/original/training/val_batch1_labels.jpg",
+      "normalized": false,
+      "published_sha256": "dce66774f4734c080b1477fc0cccefc7a65c75a1e617d8a726dc8101116d236d",
+      "size_bytes": 664541,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch1_labels.jpg",
+      "source_sha256": "dce66774f4734c080b1477fc0cccefc7a65c75a1e617d8a726dc8101116d236d"
+    },
+    {
+      "destination": "results/original/training/val_batch1_pred.jpg",
+      "normalized": false,
+      "published_sha256": "c4c1365954d21529598d78b5111d844b1f8da65e3251055bd73d42abde2fa5f6",
+      "size_bytes": 675107,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch1_pred.jpg",
+      "source_sha256": "c4c1365954d21529598d78b5111d844b1f8da65e3251055bd73d42abde2fa5f6"
+    },
+    {
+      "destination": "results/original/training/val_batch2_labels.jpg",
+      "normalized": false,
+      "published_sha256": "0de34073b9165ca360c8d3449171e653f97ef510238444ba779554ebb05dd20a",
+      "size_bytes": 619923,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch2_labels.jpg",
+      "source_sha256": "0de34073b9165ca360c8d3449171e653f97ef510238444ba779554ebb05dd20a"
+    },
+    {
+      "destination": "results/original/training/val_batch2_pred.jpg",
+      "normalized": false,
+      "published_sha256": "45325046d1a4039e9765c39fbaf25aa9ae42f6376f41c2e2d6a6c14ff381cbe7",
+      "size_bytes": 634961,
+      "source": "runs/original_grouped_v1_yolov8n/val_batch2_pred.jpg",
+      "source_sha256": "45325046d1a4039e9765c39fbaf25aa9ae42f6376f41c2e2d6a6c14ff381cbe7"
+    },
+    {
+      "destination": "results/trial044_gpu_adaptation/training/args.yaml",
+      "normalized": true,
+      "published_sha256": "6ac91457d8ccfe36a1fae0b3b3c610eee3d2384ef97439e8b3147adf50a72bac",
+      "size_bytes": 1849,
+      "source": "runs/enhanced_trial044_gpu_adaptation/args.yaml",
+      "source_sha256": "828aa20afbbeadf3f17cee0f7f18bf99789d63bfa871944322a0e814654f7682"
+    },
+    {
+      "destination": "results/trial044_gpu_adaptation/training/results.csv",
+      "normalized": true,
+      "published_sha256": "6c870778341e513270b68ac43c89f7add9e1d081c863c3e8cf92f8fbf3a3a611",
+      "size_bytes": 3546,
+      "source": "runs/enhanced_trial044_gpu_adaptation/results.csv",
+      "source_sha256": "3f476b458f8bc373c6b4a7e2f567ecdbb606abc708f04cc34aa49f61f10e0bf4"
+    },
+    {
+      "destination": "results/comparison/comparison.csv",
+      "normalized": true,
+      "published_sha256": "a3f6b39bce59e231b6bcc17340beee43d4c8516e36df64139038e1209116be67",
+      "size_bytes": 789,
+      "source": "comparison.csv",
+      "source_sha256": "fa2f929f09cf98bd04fed9afe56940366452082765440a749cf471fd95c1b781",
+      "transformation": "regenerated from recorded clean-validation metrics; training_seconds is final cumulative results.csv time"
+    },
+    {
+      "destination": "results/comparison/comparison.md",
+      "normalized": true,
+      "published_sha256": "51bba917144121b6956ce2b6955bf5d2de8f8a3b468eff4684a4932a66b80629",
+      "size_bytes": 754,
+      "source": "comparison.md",
+      "source_sha256": "51e3a1e9ce38158c81bf196fcc837a37e838400ddabd1d8b774d3d37dfe96015",
+      "transformation": "regenerated from recorded clean-validation metrics; training_seconds is final cumulative results.csv time"
+    },
+    {
+      "destination": "configs/environment.json",
+      "normalized": true,
+      "published_sha256": "d22888fb5661f62e015f62c6b02260a915f5cbc57c1820afc8a4bb14a7f72adb",
+      "size_bytes": 414,
+      "source": "environment.json",
+      "source_sha256": "d580e1077c6524f6e0226a9073f077ceb2de0d7a1450dc9048e5406cce921753"
+    },
+    {
+      "destination": "results/comparison/run_state.json",
+      "normalized": true,
+      "published_sha256": "922f003d0f97939675bcff46916a780e69d74d768df93cfc836f515bede01fe2",
+      "size_bytes": 1275,
+      "source": "run_state.json",
+      "source_sha256": "0be14557f2b6767a0658d67b4bd0d45f3eb107e7526da7dba7bb10e8eedff385"
+    },
+    {
+      "destination": "configs/original/recorded_train_args.json",
+      "normalized": true,
+      "published_sha256": "3f7cb6acc60a80c45059bf0f55aa1bf794b4daa0a586da967d1399a3d3e3742c",
+      "size_bytes": 916,
+      "source": "configs/original_train_args.json",
+      "source_sha256": "3504dc81117a8826553a6267052c07f00361f7d22d83a1845c486d6e6c35dfea"
+    },
+    {
+      "destination": "models/original/best.pt",
+      "normalized": false,
+      "published_sha256": "380243d5f36d6b4e2a37689d02ede81cf045b1d0eec3af71f90b5d07820cb0fb",
+      "size_bytes": 6258154,
+      "source": "runs/original_grouped_v1_yolov8n/weights/best.pt",
+      "source_sha256": "380243d5f36d6b4e2a37689d02ede81cf045b1d0eec3af71f90b5d07820cb0fb"
+    },
+    {
+      "destination": "models/original/last.pt",
+      "normalized": false,
+      "published_sha256": "b23c6c8d91bd9b5fe3edd7ee9999065a5c6b03f8b68be00baef5c7e88b5bd44f",
+      "size_bytes": 6258154,
+      "source": "runs/original_grouped_v1_yolov8n/weights/last.pt",
+      "source_sha256": "b23c6c8d91bd9b5fe3edd7ee9999065a5c6b03f8b68be00baef5c7e88b5bd44f"
+    },
+    {
+      "destination": "models/trial044_gpu_adaptation/best.pt",
+      "normalized": false,
+      "published_sha256": "4bdde7e5dc60258de06fceb66ed25fd5814eafa3d6108a5dfb0244d59de0274d",
+      "size_bytes": 6330538,
+      "source": "runs/enhanced_trial044_gpu_adaptation/weights/best.pt",
+      "source_sha256": "4bdde7e5dc60258de06fceb66ed25fd5814eafa3d6108a5dfb0244d59de0274d"
+    },
+    {
+      "destination": "models/trial044_gpu_adaptation/last.pt",
+      "normalized": false,
+      "published_sha256": "abb07586fc780006bef4ce32e52861cf604eeb92cb2605ff95afbd4d49251cd0",
+      "size_bytes": 6330538,
+      "source": "runs/enhanced_trial044_gpu_adaptation/weights/last.pt",
+      "source_sha256": "abb07586fc780006bef4ce32e52861cf604eeb92cb2605ff95afbd4d49251cd0"
+    },
+    {
+      "destination": "manifests/dataset/authority/original_grouped_v1_train.txt",
+      "normalized": true,
+      "published_sha256": "72547cd538e71c82f67e18c13e786e65613646c1cb2365c8603d1250cc989bd8",
+      "size_bytes": 350424,
+      "source": "authority/original_grouped_v1_train.txt",
+      "source_sha256": "b453321adecbf13015bfc4022aaf787dc6c61135af62f662e393390c26642392"
+    },
+    {
+      "destination": "manifests/dataset/authority/original_grouped_v1_val.txt",
+      "normalized": true,
+      "published_sha256": "b72bfd86af6b2e19b66ff1e336bdd03e2de776f6ea615f72ea71fa5dcfd62aac",
+      "size_bytes": 233794,
+      "source": "authority/original_grouped_v1_val.txt",
+      "source_sha256": "bdafa2aee661aac03ab8ca7fad1ae551bbd754006454f3ab7a97289e776412a0"
+    },
+    {
+      "destination": "manifests/dataset/authority/enhanced_trial044_ohem_train.txt",
+      "normalized": true,
+      "published_sha256": "28b7c02baa2204302687625c0d98e507f46b65ce367ee0be92f9780848d54a31",
+      "size_bytes": 435982,
+      "source": "authority/enhanced_trial044_ohem_train.txt",
+      "source_sha256": "8a9a0712524b457e18c0553bb8b409737d599bcd2c13be66abd75c12489ba6e6"
+    },
+    {
+      "destination": "manifests/dataset/authority/enhanced_standard_val.txt",
+      "normalized": true,
+      "published_sha256": "b76446c565c2430049a1b6487183a644c8c62d7722d05c20122317250091c10a",
+      "size_bytes": 234360,
+      "source": "pcb_yolo_dataset/images/val (sorted filename inventory)",
+      "source_sha256": "905c777d88567ffddb1b326b5526307f8206a212a6bb386024936ea27689f7f4"
+    }
+  ],
+  "schema": "yolov8n_pcb_comparison_provenance/v1",
+  "test_split_used": false
+}

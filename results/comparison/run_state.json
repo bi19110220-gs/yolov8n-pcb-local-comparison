@@ -1,0 +1,20 @@
+{
+  "comparison_csv": "__SOURCE_ROOT__\\comparison.csv",
+  "comparison_markdown": "__SOURCE_ROOT__\\comparison.md",
+  "current_stage": "completed",
+  "ended_at_utc": "2026-09-16T12:35:51.833766+00:00",
+  "enhanced_completed": true,
+  "enhanced_resume_started_at_utc": "2026-09-16T10:30:51.668550+00:00",
+  "original_completed": true,
+  "output_dir": "__SOURCE_ROOT__",
+  "pid": 35740,
+  "prior_enhanced_failure": {
+    "ended_at_utc": "2026-09-16T08:39:06.838207+00:00",
+    "error": "ModuleNotFoundError: No module named 'tools'",
+    "traceback": "Traceback (most recent call last):\n  File \"__USER_HOME__\\project\\simin fyp\\tools\\run_local_vscode_comparison.py\", line 589, in main\n    enhanced = run_enhanced(output_dir, Path(authorities[\"enhanced\"][\"data_yaml\"]))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"__USER_HOME__\\project\\simin fyp\\tools\\run_local_vscode_comparison.py\", line 435, in run_enhanced\n    from tools.top5_classification_head_trainer import Top5ClassificationHeadTrainer\nModuleNotFoundError: No module named 'tools'\n"
+  },
+  "schema": "local_vscode_yolov8n_comparison/v1",
+  "started_at_utc": "2026-09-16T04:39:31.115641+00:00",
+  "status": "COMPLETED",
+  "test_split_used": false
+}

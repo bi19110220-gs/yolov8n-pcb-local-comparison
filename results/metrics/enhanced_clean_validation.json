@@ -1,0 +1,117 @@
+{
+  "best_checkpoint": "__SOURCE_ROOT__\\runs\\enhanced_trial044_gpu_adaptation\\weights\\best.pt",
+  "device": "cuda:0",
+  "ended_at_unix": 1789562151.823184,
+  "last_checkpoint": "__SOURCE_ROOT__\\runs\\enhanced_trial044_gpu_adaptation\\weights\\last.pt",
+  "model": "enhanced_trial044_gpu_adaptation",
+  "scope_audit": {
+    "frozen_parameters": 2641440,
+    "optimizer_parameter_ids_bound": true,
+    "optimizer_parameters": 24,
+    "parameter_prefix": "model.22.cv3.",
+    "schema": "top5_20_percent/classification_scope_v1",
+    "trainable_names": [
+      "model.22.cv3.0.0.conv.weight",
+      "model.22.cv3.0.0.bn.weight",
+      "model.22.cv3.0.0.bn.bias",
+      "model.22.cv3.0.1.conv.weight",
+      "model.22.cv3.0.1.bn.weight",
+      "model.22.cv3.0.1.bn.bias",
+      "model.22.cv3.0.2.weight",
+      "model.22.cv3.0.2.bias",
+      "model.22.cv3.1.0.conv.weight",
+      "model.22.cv3.1.0.bn.weight",
+      "model.22.cv3.1.0.bn.bias",
+      "model.22.cv3.1.1.conv.weight",
+      "model.22.cv3.1.1.bn.weight",
+      "model.22.cv3.1.1.bn.bias",
+      "model.22.cv3.1.2.weight",
+      "model.22.cv3.1.2.bias",
+      "model.22.cv3.2.0.conv.weight",
+      "model.22.cv3.2.0.bn.weight",
+      "model.22.cv3.2.0.bn.bias",
+      "model.22.cv3.2.1.conv.weight",
+      "model.22.cv3.2.1.bn.weight",
+      "model.22.cv3.2.1.bn.bias",
+      "model.22.cv3.2.2.weight",
+      "model.22.cv3.2.2.bias"
+    ],
+    "trainable_parameters": 370578,
+    "trainable_tensors": 24
+  },
+  "source_candidate_id": "top5_20_044_parent035_classification_head_cls140_cpu_1024",
+  "started_at_unix": 1789554653.0984025,
+  "test_split_used": false,
+  "training": {
+    "elapsed_seconds": 7401.07,
+    "epochs_logged": 27,
+    "last_epoch": 27,
+    "results_csv": "__SOURCE_ROOT__\\runs\\enhanced_trial044_gpu_adaptation\\results.csv"
+  },
+  "training_authority": "Trial044 OHEM train view plus standard validation",
+  "validation": {
+    "checkpoint": "__SOURCE_ROOT__\\runs\\enhanced_trial044_gpu_adaptation\\weights\\best.pt",
+    "checkpoint_sha256": "4bdde7e5dc60258de06fceb66ed25fd5814eafa3d6108a5dfb0244d59de0274d",
+    "data_yaml": "__SOURCE_ROOT__\\authority\\enhanced_trial044_validation_only.yaml",
+    "f1": 0.993056661796487,
+    "inference_latency_ms": 4.771176156978149,
+    "map50": 0.9928284787248205,
+    "map50_95": 0.7584823398872506,
+    "model_size_mb": 6.037271499633789,
+    "parameters": 3006818,
+    "per_class": [
+      {
+        "ap50": 0.9948278963938936,
+        "ap50_95": 0.7577820402113904,
+        "class_index": 0,
+        "class_name": "missing_hole",
+        "precision": 0.9947930728105218,
+        "recall": 0.998303647158609
+      },
+      {
+        "ap50": 0.9943613664725847,
+        "ap50_95": 0.7582487850441468,
+        "class_index": 1,
+        "class_name": "mouse_bite",
+        "precision": 0.9948076272731929,
+        "recall": 0.9944128867678342
+      },
+      {
+        "ap50": 0.9949917012448132,
+        "ap50_95": 0.7207690322623488,
+        "class_index": 2,
+        "class_name": "open_circuit",
+        "precision": 0.9975315622840099,
+        "recall": 0.9983471074380166
+      },
+      {
+        "ap50": 0.9844801208348165,
+        "ap50_95": 0.7635431173424589,
+        "class_index": 3,
+        "class_name": "short",
+        "precision": 0.9885065261561541,
+        "recall": 0.9807860262008734
+      },
+      {
+        "ap50": 0.9946510906473084,
+        "ap50_95": 0.7750359594029053,
+        "class_index": 4,
+        "class_name": "spur",
+        "precision": 0.9971768885548199,
+        "recall": 0.9886264216972879
+      },
+      {
+        "ap50": 0.9936586967555067,
+        "ap50_95": 0.7755151050602539,
+        "class_index": 5,
+        "class_name": "spurious_copper",
+        "precision": 0.992337126261811,
+        "recall": 0.991066593145802
+      }
+    ],
+    "precision": 0.9941921338900849,
+    "recall": 0.9919237804014038,
+    "split": "val",
+    "test_split_used": false
+  }
+}

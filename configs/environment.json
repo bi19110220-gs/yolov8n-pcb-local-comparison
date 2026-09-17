@@ -1,0 +1,12 @@
+{
+  "cuda_available": true,
+  "cuda_runtime": "12.8",
+  "gpu": "NVIDIA GeForce RTX 3080",
+  "gpu_count": 1,
+  "python": "3.11.9",
+  "python_executable": "__USER_HOME__\\AppData\\Local\\Microsoft\\WindowsApps\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\python.exe",
+  "recorded_at_utc": "2026-09-16T04:39:32.174116+00:00",
+  "test_split_used": false,
+  "torch": "2.11.0+cu128",
+  "ultralytics": "8.4.84"
+}

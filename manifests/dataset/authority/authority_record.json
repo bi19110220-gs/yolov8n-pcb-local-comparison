@@ -1,0 +1,22 @@
+{
+  "enhanced": {
+    "authority": "Trial044 20% OHEM train view plus standard validation",
+    "data_yaml": "__SOURCE_ROOT__\\authority\\enhanced_trial044_validation_only.yaml",
+    "test_split_used": false,
+    "train_entries": 6354,
+    "train_manifest": "__SOURCE_ROOT__\\authority\\enhanced_trial044_ohem_train.txt",
+    "train_sha256": "8a9a0712524b457e18c0553bb8b409737d599bcd2c13be66abd75c12489ba6e6",
+    "val_path": "__USER_HOME__\\project\\simin fyp\\pcb_yolo_dataset\\images\\val"
+  },
+  "original": {
+    "authority": "grouped-v1",
+    "data_yaml": "__SOURCE_ROOT__\\authority\\original_grouped_v1_validation_only.yaml",
+    "test_split_used": false,
+    "train_entries": 5120,
+    "train_manifest": "__SOURCE_ROOT__\\authority\\original_grouped_v1_train.txt",
+    "train_sha256": "b453321adecbf13015bfc4022aaf787dc6c61135af62f662e393390c26642392",
+    "val_entries": 3416,
+    "val_manifest": "__SOURCE_ROOT__\\authority\\original_grouped_v1_val.txt",
+    "val_sha256": "bdafa2aee661aac03ab8ca7fad1ae551bbd754006454f3ab7a97289e776412a0"
+  }
+}

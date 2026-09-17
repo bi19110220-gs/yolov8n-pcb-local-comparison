@@ -1,0 +1,81 @@
+{
+  "best_checkpoint": "__SOURCE_ROOT__\\runs\\original_grouped_v1_yolov8n\\weights\\best.pt",
+  "device": "cuda:0",
+  "ended_at_unix": 1789547946.8292067,
+  "last_checkpoint": "__SOURCE_ROOT__\\runs\\original_grouped_v1_yolov8n\\weights\\last.pt",
+  "model": "original_grouped_v1_yolov8n",
+  "started_at_unix": 1789533572.447175,
+  "test_split_used": false,
+  "training": {
+    "elapsed_seconds": 14266.4,
+    "epochs_logged": 100,
+    "last_epoch": 100,
+    "results_csv": "__SOURCE_ROOT__\\runs\\original_grouped_v1_yolov8n\\results.csv"
+  },
+  "training_authority": "grouped-v1",
+  "validation": {
+    "checkpoint": "__SOURCE_ROOT__\\runs\\original_grouped_v1_yolov8n\\weights\\best.pt",
+    "checkpoint_sha256": "380243d5f36d6b4e2a37689d02ede81cf045b1d0eec3af71f90b5d07820cb0fb",
+    "data_yaml": "__SOURCE_ROOT__\\authority\\original_grouped_v1_validation_only.yaml",
+    "f1": 0.9746266753308936,
+    "inference_latency_ms": 2.637215105377557,
+    "map50": 0.9817995241078652,
+    "map50_95": 0.5550610839560335,
+    "model_size_mb": 5.968240737915039,
+    "parameters": 3006818,
+    "per_class": [
+      {
+        "ap50": 0.991828428166512,
+        "ap50_95": 0.5665923097902876,
+        "class_index": 0,
+        "class_name": "missing_hole",
+        "precision": 0.9738932810864958,
+        "recall": 0.993499991237349
+      },
+      {
+        "ap50": 0.9923637266976081,
+        "ap50_95": 0.5683412666567642,
+        "class_index": 1,
+        "class_name": "mouse_bite",
+        "precision": 0.9802569532998936,
+        "recall": 0.9829192546583851
+      },
+      {
+        "ap50": 0.9882028209435826,
+        "ap50_95": 0.5398489342815382,
+        "class_index": 2,
+        "class_name": "open_circuit",
+        "precision": 0.9835906656404751,
+        "recall": 0.9784172259496482
+      },
+      {
+        "ap50": 0.9677224032415704,
+        "ap50_95": 0.5668159921751807,
+        "class_index": 3,
+        "class_name": "short",
+        "precision": 0.9763123667435372,
+        "recall": 0.9602324102836683
+      },
+      {
+        "ap50": 0.9650309067744094,
+        "ap50_95": 0.5312719006246875,
+        "class_index": 4,
+        "class_name": "spur",
+        "precision": 0.9739858076747197,
+        "recall": 0.9496466431095406
+      },
+      {
+        "ap50": 0.9856488588235089,
+        "ap50_95": 0.5574961002077432,
+        "class_index": 5,
+        "class_name": "spurious_copper",
+        "precision": 0.96832189355298,
+        "recall": 0.974468837072317
+      }
+    ],
+    "precision": 0.976060161333017,
+    "recall": 0.9731973937184848,
+    "split": "val",
+    "test_split_used": false
+  }
+}

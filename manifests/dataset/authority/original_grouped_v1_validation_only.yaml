@@ -1,0 +1,11 @@
+path: __USER_HOME__\project\simin fyp\pcb_yolo_dataset
+train: __SOURCE_ROOT__\authority\original_grouped_v1_train.txt
+val: __SOURCE_ROOT__\authority\original_grouped_v1_val.txt
+nc: 6
+names:
+- missing_hole
+- mouse_bite
+- open_circuit
+- short
+- spur
+- spurious_copper

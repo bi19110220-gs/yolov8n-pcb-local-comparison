@@ -1,0 +1,11 @@
+path: __USER_HOME__\project\simin fyp\pcb_yolo_dataset
+train: __SOURCE_ROOT__\authority\enhanced_trial044_ohem_train.txt
+val: __USER_HOME__\project\simin fyp\pcb_yolo_dataset\images\val
+nc: 6
+names:
+- missing_hole
+- mouse_bite
+- open_circuit
+- short
+- spur
+- spurious_copper

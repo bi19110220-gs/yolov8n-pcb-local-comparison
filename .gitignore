@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*.cache
+/dataset/
+/release-assets/
+/results/local_vscode_comparison_*/
+*.zip
+.env
+.env.*
+!.env.example
