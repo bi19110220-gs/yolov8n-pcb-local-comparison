@@ -1,0 +1,59 @@
+{
+  "authority_manifest": "original_grouped_v1_val.txt",
+  "checkpoint": "weights/original_best.pt",
+  "checkpoint_sha256": "380243d5f36d6b4e2a37689d02ede81cf045b1d0eec3af71f90b5d07820cb0fb",
+  "elapsed_seconds": 87.44573690000107,
+  "ended_at_utc": "2026-09-18T15:56:03.296105+00:00",
+  "environment": {
+    "cuda_available": true,
+    "cuda_runtime": "12.8",
+    "gpu": "NVIDIA GeForce RTX 3080",
+    "gpu_count": 1,
+    "python": "3.11.9",
+    "recorded_at_utc": "2026-09-18T15:52:28.635622+00:00",
+    "test_split_used": false,
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.84"
+  },
+  "generated_files": {
+    "BoxF1_curve.png": "15b7b4bf13bad1b1c01dfca5cfc6987a12a3df500b5c3f27ab66ed307d874686",
+    "BoxPR_curve.png": "3a1b5db3cee3a9dd54b833d512d2ce3d5fe39f7b01ea88c2b2059dce143b0ae2",
+    "BoxP_curve.png": "d6a90ec52f2eda99ab1849a2a0d1322e902f266198e90ce3d29953808eb388f3",
+    "BoxR_curve.png": "1c0b37c2f05742bb1c4522d6949af7549180908361505caf18c57552e07b2235",
+    "confusion_matrix.png": "a4da5dd59ea49d0caf2043a065b9909197d1ad032db1499836b3f7cf9cf983b4",
+    "confusion_matrix_normalized.png": "e67a7a42bb838b14a63c19b559300e91be9abe4e5568874a98e3484deb524736",
+    "prediction_examples/val_batch0_labels.jpg": "79a7d831dc2397d64caa79ad8b874776ce6e99f408ac809164623b19ef0539eb",
+    "prediction_examples/val_batch0_pred.jpg": "4cb40bb6d02711cfa204ffb01d914cb8476369a5d87f2b633d622afb7dbc401e",
+    "prediction_examples/val_batch1_labels.jpg": "7f842756742b6378e4f5eda127b811840cf50b203a543915eb2b9a6d4bd0e4c9",
+    "prediction_examples/val_batch1_pred.jpg": "aac3a0fdec25d298132349c74f603818d779f24d9df995e0e63fb7d12b603dc1",
+    "prediction_examples/val_batch2_labels.jpg": "7cd442f1a2a26bdf64f010872a00134e28c261d2ccbf978fa6ed9b0166c9217b",
+    "prediction_examples/val_batch2_pred.jpg": "a81b5a32a119711403c313843891040f371924e243020d29709be7a8ac49733a"
+  },
+  "label": "Regenerated validation plots; separate from recorded final metrics",
+  "metrics": {
+    "map50": 0.9817995241078652,
+    "map50_95": 0.5550608667406426,
+    "precision": 0.976060161333017,
+    "recall": 0.9731973937184848
+  },
+  "published_authority_sha256": "b72bfd86af6b2e19b66ff1e336bdd03e2de776f6ea615f72ea71fa5dcfd62aac",
+  "runtime_authority_sha256": "3a3f4d6106b7021fadef286e71e0b51ab49bb36afaa39748d416e379d7943b1a",
+  "runtime_yaml_sha256": "74c3335cfbad0ad68b6d540373a1f930555606879b47e9320c199489b5e2f686",
+  "settings": {
+    "augment": false,
+    "batch": 8,
+    "conf": 0.001,
+    "device": 0,
+    "imgsz": 640,
+    "iou": 0.7,
+    "max_det": 300,
+    "plots": true,
+    "split": "val",
+    "workers": 0
+  },
+  "source_authority_sha256": "bdafa2aee661aac03ab8ca7fad1ae551bbd754006454f3ab7a97289e776412a0",
+  "started_at_utc": "2026-09-18T15:54:35.851118+00:00",
+  "test_split_used": false,
+  "training_performed": false,
+  "validation_entries": 3416
+}

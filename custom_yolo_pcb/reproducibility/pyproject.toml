@@ -1,0 +1,9 @@
+[project]
+name = "yolov8n-pcb-local-comparison"
+version = "1.0.0"
+requires-python = ">=3.11,<3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["..", "../model_code", "."]
+python_files = ["test_*.py"]

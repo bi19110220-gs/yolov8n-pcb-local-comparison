@@ -1,4 +1,4 @@
-# Published text hashes cover LF bytes, including on Windows checkout.
+# Preserve published LF hashes after relocation under custom_yolo_pcb, including Windows checkout.
 *.py text eol=lf
 *.ps1 text eol=lf
 *.md text eol=lf

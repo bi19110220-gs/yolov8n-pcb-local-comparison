@@ -4,8 +4,11 @@ __pycache__/
 *.py[cod]
 *.cache
 /dataset/
+/custom_yolo_pcb/dataset/
 /release-assets/
 /results/local_vscode_comparison_*/
+/custom_yolo_pcb/results/local_vscode_comparison_*/
+/custom_yolo_pcb/reproducibility/runtime/
 *.zip
 .env
 .env.*

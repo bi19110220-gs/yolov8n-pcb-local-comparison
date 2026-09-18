@@ -1,0 +1,19 @@
+{
+  "test_split_used": false,
+  "sources": {
+    "results/original/training/results.csv": "2951aaf273da7adf5779b539d30167e8d210319e1f5a00de7873af64f4d64202",
+    "results/metrics/original_clean_validation.json": "44f13bacdd307330da89b381c75e8a67c1e737c7d0b749c50b6f8e3985c191fe",
+    "results/trial044_gpu_adaptation/training/results.csv": "6c870778341e513270b68ac43c89f7add9e1d081c863c3e8cf92f8fbf3a3a611",
+    "results/metrics/enhanced_clean_validation.json": "284d0c3edffa96b1f6bcfd7b1e74ef1ba4239fa4e157cade98f8a516bee8f976"
+  },
+  "epochs": {
+    "original": {
+      "completed": 100,
+      "best": 97
+    },
+    "trial044": {
+      "completed": 27,
+      "best": 12
+    }
+  }
+}
