@@ -4,7 +4,13 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = next(p for p in Path(__file__).resolve().parents if (p / '.git').is_dir())
+ROOT = Path(
+    subprocess.check_output(
+        ['git', 'rev-parse', '--show-toplevel'],
+        cwd=Path(__file__).resolve().parent,
+        text=True,
+    ).strip()
+)
 PACKAGE = ROOT / 'custom_yolo_pcb'
 
 
@@ -15,10 +21,33 @@ def test_only_four_tracked_root_entries():
 
 
 def test_beginner_files_and_four_visible_weights():
-    for name in ('README.md', 'RESULTS_REPORT.md', 'train_local.py', 'prepare_dataset.ps1', 'requirements.txt'):
+    for name in (
+        'PCB_Quality_Inspector.ipynb', 'app.py', 'README.md', 'RESULTS_REPORT.md',
+        'train_local.py', 'prepare_dataset.ps1', 'requirements.txt',
+    ):
         assert (PACKAGE / name).is_file(), name
     assert {p.name for p in (PACKAGE / 'weights').glob('*.pt')} == {'original_best.pt', 'trial044_best.pt', 'yolov8n.pt', 'trial035_parent_best.pt'}
     assert {p.name for p in (PACKAGE / 'reproducibility/checkpoints').glob('*.pt')} == {'original_last.pt', 'trial044_last.pt'}
+
+
+def test_notebook_and_streamlit_dependencies_are_pinned():
+    requirements = (PACKAGE / 'requirements.txt').read_text(encoding='utf-8').splitlines()
+    expected = {
+        'streamlit==1.64.0', 'Pillow==12.3.0', 'pandas==3.0.6',
+        'matplotlib==3.11.2', 'ipykernel==7.3.0', 'nbformat==5.11.1',
+        'nbclient==0.11.0', 'nbconvert==7.17.1',
+    }
+    assert expected.issubset(set(requirements))
+
+
+def test_beginner_docs_make_notebook_primary_and_preserve_release_boundary():
+    root_readme = (ROOT / 'README.md').read_text(encoding='utf-8')
+    package_readme = (PACKAGE / 'README.md').read_text(encoding='utf-8')
+    for text in ('PCB_Quality_Inspector.ipynb', 'Select Kernel', 'Run All', 'streamlit run app.py'):
+        assert text in package_readme
+    assert 'v1.1.0' in root_readme
+    assert 'v1.0.0' in root_readme
+    assert 'Vercel' in package_readme and 'not' in package_readme
 
 
 def test_no_duplicate_checkpoints_or_obsolete_presentation():

@@ -41,11 +41,23 @@ def test_validation_plan_pins_val_only_and_both_resolutions():
 
 def test_packager_uses_beginner_destinations():
     from scripts.package import package_comparison as packager
-    destinations = [destination for _, destination in packager.SOURCE_ITEMS + packager.RUN_ITEMS]
+    destinations = [destination for _, destination in packager.SOURCE_ITEMS + packager.RUN_ITEMS + packager.RUNTIME_ITEMS]
     assert 'weights/original_best.pt' in destinations
     assert 'weights/trial044_best.pt' in destinations
     assert 'reproducibility/checkpoints/original_last.pt' in destinations
     assert all(not path.startswith(('models/', 'configs/', 'manifests/')) for path in destinations)
+    for required in (
+        'PCB_Quality_Inspector.ipynb', 'app.py', 'model_code/inspector_core.py',
+        'model_code/app_template.py', 'model_code/generate_app.py',
+        'model_code/notebook_workflow.py', 'reproducibility/scripts/build_notebook.py',
+        '.streamlit/config.toml',
+    ):
+        assert required in destinations
+
+
+def test_verifier_scans_notebook_json_as_text():
+    from scripts.verify import verify_package
+    assert '.ipynb' in verify_package.TEXT_SUFFIXES
 
 
 def test_verifier_checks_artifact_hashes(tmp_path):

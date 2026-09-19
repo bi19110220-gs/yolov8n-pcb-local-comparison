@@ -1,93 +1,96 @@
-# PCB defect detection: local YOLOv8n comparison
+# PCB Quality Inspector — local VS Code guide
 
-Start with [the results report](RESULTS_REPORT.md). It contains both models' saved training curves, final validation results, and matching regenerated validation plots. You do not need to train again to examine the results.
+This FYP package has one main file: [PCB_Quality_Inspector.ipynb](PCB_Quality_Inspector.ipynb). It shows the recorded Original-versus-Enhanced results, can run the complete training sequence when deliberately enabled, creates `app.py`, and opens the local PCB image inspector.
 
-This Windows / VS Code package compares the original YOLOv8n with the Trial 044 RTX 3080 adaptation. They use different recorded training authorities, starting checkpoints, schedules, and image sizes; this is not a controlled same-data ablation. Held-out test evaluation was not run. There is no globally held-out image set in the combined dataset release because the two authority schemes assign different roles to some images.
+No Vercel or cloud deployment is used. Training, validation, and uploaded-image inference stay on your Windows PC.
 
-## 1. Install locally
+## 1. One-time setup
 
-Install Python 3.11 and VS Code, then open this `custom_yolo_pcb` folder in VS Code. In its PowerShell terminal:
+Install Python 3.11 and VS Code. Open this `custom_yolo_pcb` folder in VS Code, then run these commands in its PowerShell terminal:
 
 ```powershell
 py -3.11 -m venv .venv
-& .\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install "torch==2.11.0+cu128" torchvision --index-url https://download.pytorch.org/whl/cu128
-python -m pip install -r requirements.txt
-python -c "import torch, ultralytics; print(torch.__version__, ultralytics.__version__); print('CUDA' if torch.cuda.is_available() else 'CPU')"
+& .\.venv\Scripts\python.exe -m pip install --upgrade pip
+& .\.venv\Scripts\python.exe -m pip install "torch==2.11.0+cu128" torchvision --index-url https://download.pytorch.org/whl/cu128
+& .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Select `.venv` with **Python: Select Interpreter** in VS Code. If PowerShell blocks activation, use `& .\.venv\Scripts\python.exe` wherever a command below says `python`. The recorded environment is Python 3.11.9, PyTorch 2.11.0+cu128, and Ultralytics 8.4.84. A compatible NVIDIA driver is required for CUDA. If CUDA is unavailable, the training and validation entry points automatically select CPU; this can be substantially slower. Neither different hardware nor CPU fallback promises identical numerical results. The original automatic batch selection can also depend on available memory.
+The recorded environment used Python 3.11.9, PyTorch 2.11.0+cu128, Ultralytics 8.4.84, and an NVIDIA RTX 3080. The code automatically uses CPU when CUDA is unavailable, but training will be much slower and hardware differences can change numerical results.
 
-## 2. Download and prepare the dataset
+## 2. Download the dataset once
 
-Download `pcb_yolo_train_val_v1.0.0.zip` from the private [v1.0.0 Release](https://github.com/bi19110220-gs/yolov8n-pcb-local-comparison/releases/tag/v1.0.0). Access requires repository permission. Keep the ZIP in the repository's ignored `release-assets` folder, or pass its downloaded location explicitly:
+Download `pcb_yolo_train_val_v1.0.0.zip` from the private [v1.0.0 Release](https://github.com/bi19110220-gs/yolov8n-pcb-local-comparison/releases/tag/v1.0.0) and place it here:
+
+```text
+yolov8n-pcb-local-comparison/
+└── release-assets/
+    └── pcb_yolo_train_val_v1.0.0.zip
+```
+
+The notebook verifies the published SHA-256 before extracting the 1.13 GB dataset. If it is already prepared, it reuses it. The ZIP and extracted dataset remain outside Git.
+
+## 3. Normal workflow: Select Kernel → Run All
+
+1. Open `PCB_Quality_Inspector.ipynb`.
+2. Click **Select Kernel** in VS Code.
+3. Choose `custom_yolo_pcb\.venv\Scripts\python.exe`.
+4. Click **Run All**.
+5. Open <http://localhost:8501> if the browser does not open automatically.
+
+The safe defaults are:
+
+```python
+RUN_TRAINING = False
+RUN_RECOVERY = False
+LAUNCH_STREAMLIT = True
+RECOVERY_OUTPUT_DIR = None
+```
+
+With these defaults, Run All verifies the environment, dataset, model hashes, and validation-only authorities; shows the saved metric table and charts; regenerates the exact committed `app.py`; and starts Streamlit. It does not retrain.
+
+To deliberately retrain, set only `RUN_TRAINING = True`. The guarded order is Original training → Original clean validation → Trial 044 training → Trial 044 clean validation → comparison export. Each run uses a new `results/notebook_runs/YYYYMMDD_HHMMSS/` folder and does not overwrite published evidence.
+
+`RUN_RECOVERY` is only for an exact failed enhanced-stage notebook run. Set `RECOVERY_OUTPUT_DIR` to that existing run directory; all authority and checkpoint guards still apply.
+
+## 4. Use the PCB image inspector
+
+The Streamlit app loads only the included, hash-verified `weights/trial044_best.pt`. It detects all six classes:
+
+- missing hole
+- mouse bite
+- open circuit
+- short
+- spur
+- spurious copper
+
+Upload one JPG, JPEG, or PNG image, set confidence from `0.05` to `0.95`, and click **Inspect PCB**. The fixed inference settings are 1024-pixel input, IoU 0.70, maximum 300 detections, and no test-time augmentation.
+
+The app shows the annotated result first, the original image second, total detections, classes found, mean confidence, inference time, top defect, six per-class counts, and a confidence-sorted detection table. You can download an annotated PNG and CSV.
+
+Uploads are limited to 10 MB and 20 megapixels. EXIF orientation is corrected, images are converted to RGB, and upload bytes stay in memory instead of being saved to disk. **No defects detected** only means no box met the chosen threshold; it is not a quality-control pass decision.
+
+To start the same committed app without opening the notebook:
 
 ```powershell
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\prepare_dataset.ps1 -Archive "..\release-assets\pcb_yolo_train_val_v1.0.0.zip"
+& .\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-The script verifies the ZIP against the published [SHA-256 sidecar](reproducibility/manifests/dataset/pcb_yolo_train_val_v1.0.0.sha256) before extraction. It rejects unsafe archive members and a nonempty destination. It produces `dataset/pcb_yolo_dataset/images/pool` and `labels/pool`. Four preserved train/validation manifests select the exact model-specific rows, including OHEM repetitions and order. Do not manually split or reorganize the pool. The archive and local dataset remain outside Git. `-Python` can select an explicit interpreter; `-Destination` is available for extraction checks, but training expects the default package-local dataset location.
+## 5. Review results and verify the package
 
-## 3. Run the comparison
+Read [RESULTS_REPORT.md](RESULTS_REPORT.md) for the saved training/validation curves, final metrics, per-class chart, confusion matrices, PR/F1/precision/recall curves, and validation examples. Trial 044 finished normally through early stopping: its best epoch was 12 and training stopped at epoch 27 after the configured patience was exhausted.
 
-First check all packaged inputs and materialize the authorities without training:
+Run lightweight checks from this folder:
 
 ```powershell
-python train_local.py --preflight-only
+& .\.venv\Scripts\python.exe -m pytest reproducibility\tests -q
+& .\.venv\Scripts\python.exe reproducibility\scripts\verify\verify_package.py --root ..
+& .\.venv\Scripts\python.exe reproducibility\scripts\verify\verify_clone.py --root ..
 ```
 
-To deliberately train a new comparison:
+These checks do not train models or access a held-out test split.
 
-```powershell
-python train_local.py
-```
+## Important comparison limitation
 
-The original always trains first from `weights/yolov8n.pt`, then Trial 044 starts from `weights/trial035_parent_best.pt`. Both receive a clean validation pass. The preserved parameters are in [the original config](reproducibility/configs/original/recorded_train_args.json) and [the Trial 044 config](reproducibility/configs/trial044_gpu_adaptation/historical_cpu_trial044.json). Trial 044 uses classification-head-only optimization with MPDIoU, 1024-pixel images, and its exact OHEM authority.
+Original and Trial 044 use different recorded training authorities, starting checkpoints, schedules, and image sizes. The results are a reproducible descriptive comparison, not a controlled same-data ablation. This package preserves the completed Trial 044 RTX 3080 adaptation. Held-out test evaluation was not run; all reported accuracy is validation-only, and future test evaluation remains a separate, explicitly authorized release event.
 
-Each invocation uses a fresh timestamped directory under `results/local_vscode_comparison_*`. `--output-dir` selects another fresh directory. Relative custom output paths are resolved from the current terminal directory. No training command accepts a test split. If a new run fails at the exact enhanced-training boundary after completing the original, recover through the same entry point:
-
-```powershell
-python train_local.py --output-dir "results\local_vscode_comparison_YOUR_RUN" --resume-enhanced-only
-```
-
-Recovery checks the completed original checkpoint, recorded metrics, exact authorities, hashes, and failed stage before restarting Trial 044 from its parent. The archived `last.pt` checkpoints are historical evidence; stripped optimizer state does not guarantee exact optimizer resumption.
-
-## 4. Regenerate the visuals or verify the package
-
-Charts use only saved CSV/JSON evidence and do not run either model:
-
-```powershell
-python reproducibility\generate_charts.py
-```
-
-To regenerate validation plots with the preserved best checkpoints, choose a new empty output directory:
-
-```powershell
-python reproducibility\regenerate_validation.py --output-dir results\local_vscode_comparison_validation_new
-```
-
-This runs `split='val'`, original `imgsz=640`, Trial 044 `imgsz=1024`, `conf=0.001`, `iou=0.7`, `max_det=300`, `augment=False`, and `plots=True`. The packaged regenerated outputs are under `results/regenerated_validation`. Each model has checkpoint/authority hashes, timestamps, runtime details, metrics, and output hashes in `provenance.json`. New validation runs do not overwrite the recorded final metrics or the existing report. The report's original numbers remain traceable to their saved clean-validation JSON.
-
-```powershell
-python -m pytest reproducibility\tests -q
-python reproducibility\scripts\verify\verify_package.py --root ..
-python reproducibility\scripts\verify\verify_clone.py --root ..
-```
-
-The checks cover checksum extraction, exact authority materialization, guarded recovery, model hashes, relative report links, fresh-clone imports, and held-out-test exclusion. No training is part of the tests. To inspect implementation, start with [model_code](model_code); full configurations, notices, historical evidence, and packaging tools are under [reproducibility](reproducibility).
-
-## Folder guide
-
-| Location | Purpose |
-| --- | --- |
-| `train_local.py` | The beginner training entry point |
-| `prepare_dataset.ps1` | Checksum-verified Release extraction |
-| `weights/` | Original/Trial 044 best checkpoints and their two starting checkpoints |
-| `model_code/` | Preserved YOLOv8n custom trainers and MPDIoU code |
-| `results/charts/` | Balanced figures generated from recorded evidence |
-| `results/regenerated_validation/` | Newly regenerated, clearly separated validation plots |
-| `results/original/`, `results/trial044_gpu_adaptation/` | Preserved training histories |
-| `reproducibility/` | Audit manifests, configs, notices, tests, tools, and archived last checkpoints |
-
-Read the [private-use notice](reproducibility/PRIVATE_USE_NOTICE.md) and [dataset authorization](reproducibility/DATASET_PROVENANCE.md) before sharing. The package does not grant an open-source license or permission for public dataset redistribution.
+See [reproducibility details](reproducibility/README.md), the [private-use notice](reproducibility/PRIVATE_USE_NOTICE.md), and [dataset authorization](reproducibility/DATASET_PROVENANCE.md) before sharing.

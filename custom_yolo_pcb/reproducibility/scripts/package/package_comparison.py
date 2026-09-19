@@ -15,6 +15,7 @@ from typing import Any, Iterable
 
 TEXT_SUFFIXES = {
     ".csv",
+    ".ipynb",
     ".json",
     ".log",
     ".md",
@@ -48,11 +49,16 @@ SOURCE_ITEMS = (
 # The full-repository verification wrapper stays in the checkout: an evidence
 # export does not contain its Git metadata, presentation, or full test suite.
 RUNTIME_ITEMS = tuple((name, name) for name in (
+    ".streamlit/config.toml", "PCB_Quality_Inspector.ipynb", "app.py", "README.md", "RESULTS_REPORT.md",
     "train_local.py", "prepare_dataset.ps1", "requirements.txt",
+    "model_code/inspector_core.py", "model_code/app_template.py",
+    "model_code/generate_app.py", "model_code/notebook_workflow.py",
     "tools/__init__.py", "tools/run_local_vscode_comparison.py",
     "tools/run_local_vscode_comparison.ps1", "tools/top5_classification_head_trainer.py",
     "tools/top5_mpdiou_trainer.py", "pcb_mpdiou_loss.py",
     "tools/prepare_dataset.ps1", "scripts/package/extract_dataset.py",
+    "reproducibility/scripts/build_notebook.py", "reproducibility/README.md",
+    "reproducibility/pyproject.toml",
     "manifests/dataset/pcb_yolo_train_val_v1.0.0.sha256",
 ))
 

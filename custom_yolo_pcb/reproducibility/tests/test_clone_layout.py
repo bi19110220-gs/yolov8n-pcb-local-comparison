@@ -18,6 +18,16 @@ def test_clone_layout_comes_from_git_files_not_empty_worktree_directories(tmp_pa
     result = subprocess.run([sys.executable, "custom_yolo_pcb/train_local.py", "--help"], cwd=clone, capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
     assert "--preflight-only" in result.stdout
+    for name in (
+        "custom_yolo_pcb/PCB_Quality_Inspector.ipynb",
+        "custom_yolo_pcb/app.py",
+        "custom_yolo_pcb/model_code/inspector_core.py",
+        "custom_yolo_pcb/model_code/app_template.py",
+        "custom_yolo_pcb/model_code/generate_app.py",
+        "custom_yolo_pcb/model_code/notebook_workflow.py",
+        "custom_yolo_pcb/.streamlit/config.toml",
+    ):
+        assert (clone / name).is_file(), name
 
 
 def test_layout_rejects_empty_model_and_config_directories(tmp_path):

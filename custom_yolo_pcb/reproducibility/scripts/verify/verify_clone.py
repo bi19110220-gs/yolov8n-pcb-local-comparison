@@ -43,7 +43,14 @@ REQUIRED_FILES = tuple('custom_yolo_pcb/' + (
     _WEIGHTS[name] if name in _WEIGHTS else
     'model_code/' + name if name.startswith('tools/') or name == 'pcb_mpdiou_loss.py' else
     'reproducibility/' + name
-) for name in REQUIRED_FILES) + tuple('custom_yolo_pcb/' + name for name in ('train_local.py', 'prepare_dataset.ps1', 'README.md', 'RESULTS_REPORT.md', 'requirements.txt'))
+) for name in REQUIRED_FILES) + tuple('custom_yolo_pcb/' + name for name in (
+    'PCB_Quality_Inspector.ipynb', 'app.py', 'train_local.py',
+    '.streamlit/config.toml',
+    'prepare_dataset.ps1', 'README.md', 'RESULTS_REPORT.md', 'requirements.txt',
+    'model_code/inspector_core.py', 'model_code/app_template.py',
+    'model_code/generate_app.py', 'model_code/notebook_workflow.py',
+    'reproducibility/scripts/build_notebook.py',
+))
 
 
 def copy_git_candidates(root: Path, destination: Path) -> None:
@@ -86,6 +93,7 @@ def main() -> int:
         for command in (
             [sys.executable, "custom_yolo_pcb/train_local.py", "--help"],
             [sys.executable, "-c", "import sys; sys.path.insert(0, 'custom_yolo_pcb/model_code'); from tools.run_local_vscode_comparison import verify_packaged_inputs; verify_packaged_inputs()"],
+            [sys.executable, "-c", "import pathlib, sys; sys.path.insert(0, 'custom_yolo_pcb/model_code'); from generate_app import write_generated_app; result = write_generated_app(pathlib.Path('custom_yolo_pcb/app.py')); assert result.replaced is False"],
             [sys.executable, "custom_yolo_pcb/reproducibility/scripts/verify/verify_package.py", "--root", "."],
         ):
             subprocess.run(command, cwd=clone, check=True)

@@ -15,6 +15,7 @@ from urllib.parse import unquote
 MAX_GIT_FILE_BYTES = 100 * 1024 * 1024
 TEXT_SUFFIXES = {
     ".csv",
+    ".ipynb",
     ".json",
     ".log",
     ".md",
@@ -124,7 +125,7 @@ def verify_repository(root: Path) -> list[str]:
                 break
         if path.suffix.lower() == ".md":
             failures.extend(_verify_markdown_links(path, text, root))
-        if path.suffix.lower() == ".json":
+        if path.suffix.lower() in {".json", ".ipynb"}:
             try:
                 payload = json.loads(text)
             except json.JSONDecodeError as error:

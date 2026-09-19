@@ -111,3 +111,9 @@ Prediction examples are a small deterministic first-three-batch sample from this
 From `custom_yolo_pcb`, run `python reproducibility/generate_charts.py` to recreate the balanced charts from the saved inputs. To run fresh validation without overwriting the packaged figures, use `python reproducibility/regenerate_validation.py --output-dir results/local_vscode_comparison_validation_new`.
 
 The [beginner guide](README.md) explains environment installation, checksum-verified dataset extraction, training, and verification. [Artifact provenance](reproducibility/manifests/hashes/artifact_provenance.json) binds the preserved checkpoints, training CSVs, configs and metrics to their source hashes. The required [private-use notice](reproducibility/PRIVATE_USE_NOTICE.md) and [dataset authorization](reproducibility/DATASET_PROVENANCE.md) remain part of the package.
+
+## Local uploaded-image inspection
+
+The [VS Code notebook](PCB_Quality_Inspector.ipynb) generates the committed Streamlit `app.py` and uses only the hash-verified Enhanced Trial 044 best checkpoint for ad hoc uploaded-image inference. The app exposes all six classes and retains the fixed 1024-pixel, IoU 0.70, maximum-300, no-augmentation inference contract. Uploaded images remain in memory and do not update the validation evidence above.
+
+An app message of **No defects detected** means only that no prediction met the selected confidence threshold. It is not evidence that a PCB passed quality control. The application is an inspection aid, while this report remains the authority for the recorded validation results.
