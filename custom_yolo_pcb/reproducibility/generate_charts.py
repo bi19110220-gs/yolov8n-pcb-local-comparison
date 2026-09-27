@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 PACKAGE = Path(__file__).resolve().parents[1]
-MODELS = {'original': ('Original', 'original', 'original'), 'trial044': ('Trial 044', 'trial044_gpu_adaptation', 'enhanced')}
-COLORS = {'original': '#2266aa', 'trial044': '#d47126'}
+MODELS = {'original': ('Original', 'original', 'original'), 'trial040': ('Trial 040', 'trial040', 'trial040')}
+COLORS = {'original': '#2266aa', 'trial040': '#d47126'}
 
 
 def load_evidence():
@@ -49,7 +49,7 @@ def generate():
             ax.axvline(data['best_epoch'], color='#666666', linestyle=':', label=f"Best epoch {data['best_epoch']}")
             ax.set(title=title, xlabel='Epoch', ylabel='Score', ylim=(0, 1), xlim=(1, len(rows)))
             ax.legend(fontsize=8)
-        subtitle = '100 completed epochs' if key == 'original' else '27 completed epochs | best epoch 12 | patience=15'
+        subtitle = '100 completed epochs' if key == 'original' else '330 completed epochs | best epoch 328 | patience=30'
         fig.suptitle(f"{data['label']} recorded training — {subtitle}", fontsize=15)
         fig.savefig(output / f'{key}_training.png')
         plt.close(fig)
@@ -59,7 +59,7 @@ def generate():
     for i, (key, data) in enumerate(evidence.items()):
         bars = ax.bar(x + (i - .5) * .35, [data['record']['validation'][m] for m in metrics], .35, label=data['label'], color=COLORS[key])
         ax.bar_label(bars, fmt='%.3f', fontsize=9)
-    ax.set(xticks=x, xticklabels=['Precision', 'Recall', 'F1', 'mAP50', 'mAP50-95'], ylim=(0, 1.12), ylabel='Validation score', title='Recorded clean validation — different validation authorities')
+    ax.set(xticks=x, xticklabels=['Precision', 'Recall', 'F1', 'mAP50', 'mAP50-95'], ylim=(0, 1.12), ylabel='Validation score', title='Recorded clean validation — shared validation authority')
     ax.legend(loc='lower right')
     fig.savefig(output / 'final_comparison.png')
     plt.close(fig)
@@ -70,7 +70,7 @@ def generate():
             ax.bar(np.arange(6) + (i - .5) * .35, [r[metric] for r in rows], .35, label=data['label'], color=COLORS[key])
         ax.set(xticks=np.arange(6), xticklabels=[r['class_name'].replace('_', '\n') for r in rows], ylim=(0, 1.05), title=title, ylabel='Validation score')
         ax.legend(fontsize=8)
-    fig.suptitle('Per-class recorded clean validation — different authorities', fontsize=15)
+    fig.suptitle('Per-class recorded clean validation — shared validation authority', fontsize=15)
     fig.savefig(output / 'per_class.png')
     plt.close(fig)
     provenance = {'test_split_used': False, 'sources': {p.relative_to(PACKAGE).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for d in evidence.values() for p in d['sources']}, 'epochs': {k: {'completed': len(v['rows']), 'best': v['best_epoch']} for k, v in evidence.items()}}

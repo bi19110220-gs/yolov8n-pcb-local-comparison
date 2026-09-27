@@ -1,11 +1,9 @@
-# Experiment Ledger
+# Experiment ledger
 
-| Entry | Role | Training authority | Device interpretation | Publication state |
+| Entry | Role | Initialization | Training authority | Publication state |
 | --- | --- | --- | --- | --- |
-| Original grouped-v1 YOLOv8n | Fresh comparison baseline | grouped-v1 train and validation manifests | CUDA device 0 | Packaged after terminal completion |
-| Trial 035 | Required enhanced parent | Recorded Trial 035 authority | Historical CPU checkpoint | Parent checkpoint and provenance only |
-| Historical Trial 044 | Method lineage | OHEM train view and standard validation | Historical CPU run | Configuration and metrics evidence |
-| Trial 044 GPU adaptation | Enhanced comparison model | OHEM train view and standard validation | RTX 3080 CUDA adaptation | Packaged after terminal completion |
+| Original grouped-v1 YOLOv8n | Baseline | Official `yolov8n.pt` | grouped-v1 train | Completed and packaged |
+| Trial 040 | Selected enhanced model | Official `yolov8n.pt` | Short x1.25 oversampled train | 330 epochs completed and packaged |
+| Shared validation | Final comparison | Frozen best checkpoints | grouped-v1 validation, 3,416 images | Completed without training or test access |
 
-The original and enhanced rows use different recorded training authorities and
-must not be interpreted as a same-data controlled ablation.
+Trial 040 is a single model. Another trial's checkpoint is not used as its initialization.

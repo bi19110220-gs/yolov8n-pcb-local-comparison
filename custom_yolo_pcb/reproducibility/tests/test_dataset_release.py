@@ -37,7 +37,7 @@ def _authority_inputs(root: Path, workspace: Path) -> dict[str, Path]:
             authority / "original_grouped_v1_val.txt", ["images/val/gamma.jpg"]
         ),
         "enhanced_ohem_train_manifest": _write_manifest(
-            authority / "enhanced_trial044_ohem_train.txt",
+            authority / "trial040_oversampled_train.txt",
             ["images/train/beta.jpg", "images/train/alpha.jpg", "images/train/beta.jpg"],
         ),
         "enhanced_standard_val_authority": root / "images" / "val",
@@ -66,10 +66,10 @@ def test_release_builds_neutral_deduplicated_pool_and_ordered_authorities(tmp_pa
     assert list(record["authority_memberships"]) == [
         "original_grouped_v1_train.txt",
         "original_grouped_v1_val.txt",
-        "enhanced_trial044_ohem_train.txt",
+        "trial040_oversampled_train.txt",
         "enhanced_standard_val.txt",
     ]
-    assert record["authority_memberships"]["enhanced_trial044_ohem_train.txt"]["members"] == [
+    assert record["authority_memberships"]["trial040_oversampled_train.txt"]["members"] == [
         {"image": "images/pool/beta.jpg", "label": "labels/pool/beta.txt"},
         {"image": "images/pool/alpha.jpg", "label": "labels/pool/alpha.txt"},
         {"image": "images/pool/beta.jpg", "label": "labels/pool/beta.txt"},
@@ -78,7 +78,7 @@ def test_release_builds_neutral_deduplicated_pool_and_ordered_authorities(tmp_pa
         {"image": "images/pool/delta.jpg", "label": "labels/pool/delta.txt"},
         {"image": "images/pool/gamma.jpg", "label": "labels/pool/gamma.txt"},
     ]
-    ohem = record["authority_memberships"]["enhanced_trial044_ohem_train.txt"]
+    ohem = record["authority_memberships"]["trial040_oversampled_train.txt"]
     assert len(ohem["source_sha256"]) == 64
     assert len(ohem["published_sha256"]) == 64
     assert ohem["source_row_count"] == 3

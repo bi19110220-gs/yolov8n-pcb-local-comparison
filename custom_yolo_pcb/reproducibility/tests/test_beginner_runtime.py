@@ -24,18 +24,19 @@ def test_chart_source_records_actual_epochs():
     spec.loader.exec_module(module)
     evidence = module.load_evidence()
     assert len(evidence['original']['rows']) == 100
-    assert len(evidence['trial044']['rows']) == 27
-    assert evidence['trial044']['best_epoch'] == 12
+    assert len(evidence['trial040']['rows']) == 330
+    assert evidence['trial040']['best_epoch'] == 328
 
 
-def test_validation_plan_pins_val_only_and_both_resolutions():
+def test_validation_plan_pins_one_authority_and_matched_resolution():
     path = Path(__file__).resolve().parents[1] / 'regenerate_validation.py'
     assert path.is_file()
     spec = importlib.util.spec_from_file_location('regenerate', path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    assert module.MODELS['original']['imgsz'] == 640
-    assert module.MODELS['trial044']['imgsz'] == 1024
+    assert module.MODELS['original']['imgsz'] == 1024
+    assert module.MODELS['trial040']['imgsz'] == 1024
+    assert module.MODELS['original']['authority'] == module.MODELS['trial040']['authority']
     assert module.VALIDATION_SETTINGS == dict(split='val', conf=0.001, iou=0.7, max_det=300, augment=False, plots=True, workers=0)
 
 
@@ -43,7 +44,9 @@ def test_packager_uses_beginner_destinations():
     from scripts.package import package_comparison as packager
     destinations = [destination for _, destination in packager.SOURCE_ITEMS + packager.RUN_ITEMS + packager.RUNTIME_ITEMS]
     assert 'weights/original_best.pt' in destinations
-    assert 'weights/trial044_best.pt' in destinations
+    assert 'weights/trial040_best.pt' in destinations
+    legacy_name = 'trial' + '044'
+    assert all(legacy_name not in path for path in destinations)
     assert 'reproducibility/checkpoints/original_last.pt' in destinations
     assert all(not path.startswith(('models/', 'configs/', 'manifests/')) for path in destinations)
     for required in (

@@ -2,18 +2,18 @@
   "test_split_used": false,
   "sources": {
     "results/original/training/results.csv": "2951aaf273da7adf5779b539d30167e8d210319e1f5a00de7873af64f4d64202",
-    "results/metrics/original_clean_validation.json": "44f13bacdd307330da89b381c75e8a67c1e737c7d0b749c50b6f8e3985c191fe",
-    "results/trial044_gpu_adaptation/training/results.csv": "6c870778341e513270b68ac43c89f7add9e1d081c863c3e8cf92f8fbf3a3a611",
-    "results/metrics/enhanced_clean_validation.json": "284d0c3edffa96b1f6bcfd7b1e74ef1ba4239fa4e157cade98f8a516bee8f976"
+    "results/metrics/original_clean_validation.json": "5ca862603bb44f17a7c600097a22810a7d7b469a62e1e1f82778403cb835f714",
+    "results/trial040/training/results.csv": "432d39901055d5bab1a1926b0624d547b7793669e99f19f2e4f861233d95ddcd",
+    "results/metrics/trial040_clean_validation.json": "46de88909a7b0d004f1b0cf1f02fae0be2a56106619b1d42a7a410b67ad4fbd6"
   },
   "epochs": {
     "original": {
       "completed": 100,
       "best": 97
     },
-    "trial044": {
-      "completed": 27,
-      "best": 12
+    "trial040": {
+      "completed": 330,
+      "best": 328
     }
   }
 }

@@ -17,7 +17,7 @@ FIXED_ZIP_TIME = (1980, 1, 1, 0, 0, 0)
 AUTHORITY_NAMES = (
     "original_grouped_v1_train.txt",
     "original_grouped_v1_val.txt",
-    "enhanced_trial044_ohem_train.txt",
+    "trial040_oversampled_train.txt",
     "enhanced_standard_val.txt",
 )
 

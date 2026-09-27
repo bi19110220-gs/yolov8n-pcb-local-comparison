@@ -12,20 +12,18 @@ from pathlib import Path
 
 REQUIRED_FILES = (
     "tools/__init__.py", "tools/run_local_vscode_comparison.py",
-    "tools/run_local_vscode_comparison.ps1", "tools/top5_mpdiou_trainer.py",
+    "tools/run_local_vscode_comparison.ps1",
     "tools/prepare_dataset.ps1", "tools/verify_package.ps1",
     "scripts/package/extract_dataset.py",
-    "tools/top5_classification_head_trainer.py", "pcb_mpdiou_loss.py",
-    "models/official/yolov8n.pt", "models/trial035_parent/best.pt",
+    "models/official/yolov8n.pt",
     "models/original/best.pt", "models/original/last.pt",
-    "models/trial044_gpu_adaptation/best.pt", "models/trial044_gpu_adaptation/last.pt",
+    "models/trial040/best.pt", "models/trial040/last.pt",
     "configs/original/recorded_train_args.json",
-    "configs/trial035_parent/historical_cpu_trial035.json",
-    "configs/trial044_gpu_adaptation/historical_cpu_trial044.json",
+    "configs/trial040/trial040.json",
     "manifests/hashes/artifact_provenance.json",
     "manifests/dataset/authority/original_grouped_v1_train.txt",
     "manifests/dataset/authority/original_grouped_v1_val.txt",
-    "manifests/dataset/authority/enhanced_trial044_ohem_train.txt",
+    "manifests/dataset/authority/trial040_oversampled_train.txt",
     "manifests/dataset/authority/enhanced_standard_val.txt",
 )
 
@@ -33,15 +31,14 @@ REQUIRED_FILES = (
 # Required files are expressed relative to the repository, not the working directory.
 _WEIGHTS = {
     'models/official/yolov8n.pt': 'weights/yolov8n.pt',
-    'models/trial035_parent/best.pt': 'weights/trial035_parent_best.pt',
     'models/original/best.pt': 'weights/original_best.pt',
     'models/original/last.pt': 'reproducibility/checkpoints/original_last.pt',
-    'models/trial044_gpu_adaptation/best.pt': 'weights/trial044_best.pt',
-    'models/trial044_gpu_adaptation/last.pt': 'reproducibility/checkpoints/trial044_last.pt',
+    'models/trial040/best.pt': 'weights/trial040_best.pt',
+    'models/trial040/last.pt': 'reproducibility/checkpoints/trial040_last.pt',
 }
 REQUIRED_FILES = tuple('custom_yolo_pcb/' + (
     _WEIGHTS[name] if name in _WEIGHTS else
-    'model_code/' + name if name.startswith('tools/') or name == 'pcb_mpdiou_loss.py' else
+    'model_code/' + name if name.startswith('tools/') else
     'reproducibility/' + name
 ) for name in REQUIRED_FILES) + tuple('custom_yolo_pcb/' + name for name in (
     'PCB_Quality_Inspector.ipynb', 'app.py', 'train_local.py',

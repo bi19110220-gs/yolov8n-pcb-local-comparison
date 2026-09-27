@@ -30,16 +30,8 @@ TEXT_SUFFIXES = {
 SOURCE_ITEMS = (
     ("yolov8n.pt", "models/official/yolov8n.pt"),
     (
-        "results/top5_20_percent/configs/top5_20_044_parent035_classification_head_cls140_cpu_1024.json",
-        "configs/trial044_gpu_adaptation/historical_cpu_trial044.json",
-    ),
-    (
-        "results/top5_20_percent/runs/top5_20_035_parent029_classification_head_cls120_cpu_1024/weights/best.pt",
-        "models/trial035_parent/best.pt",
-    ),
-    (
-        "results/top5_20_percent/configs/top5_20_035_parent029_classification_head_cls120_cpu_1024.json",
-        "configs/trial035_parent/historical_cpu_trial035.json",
+        "results/top5_hyperparameter_10_percent/configs/trial_040_fresh1024_short_x1_25_vertical_flip_scale005_cls100_epochs330_patience30.json",
+        "configs/trial040/trial040.json",
     ),
 )
 
@@ -54,8 +46,7 @@ RUNTIME_ITEMS = tuple((name, name) for name in (
     "model_code/inspector_core.py", "model_code/app_template.py",
     "model_code/generate_app.py", "model_code/notebook_workflow.py",
     "tools/__init__.py", "tools/run_local_vscode_comparison.py",
-    "tools/run_local_vscode_comparison.ps1", "tools/top5_classification_head_trainer.py",
-    "tools/top5_mpdiou_trainer.py", "pcb_mpdiou_loss.py",
+    "tools/run_local_vscode_comparison.ps1",
     "tools/prepare_dataset.ps1", "scripts/package/extract_dataset.py",
     "reproducibility/scripts/build_notebook.py", "reproducibility/README.md",
     "reproducibility/pyproject.toml",
@@ -68,8 +59,8 @@ RUN_ITEMS = (
     ("metrics", "results/metrics"),
     ("runs/original_grouped_v1_yolov8n", "results/original/training"),
     (
-        "runs/enhanced_trial044_gpu_adaptation",
-        "results/trial044_gpu_adaptation/training",
+        "runs/enhanced_trial040",
+        "results/trial040/training",
     ),
     ("comparison.csv", "results/comparison/comparison.csv"),
     ("comparison.md", "results/comparison/comparison.md"),
@@ -78,25 +69,24 @@ RUN_ITEMS = (
     ("configs/original_train_args.json", "configs/original/recorded_train_args.json"),
     ("runs/original_grouped_v1_yolov8n/weights/best.pt", "models/original/best.pt"),
     ("runs/original_grouped_v1_yolov8n/weights/last.pt", "models/original/last.pt"),
-    ("runs/enhanced_trial044_gpu_adaptation/weights/best.pt", "models/trial044_gpu_adaptation/best.pt"),
-    ("runs/enhanced_trial044_gpu_adaptation/weights/last.pt", "models/trial044_gpu_adaptation/last.pt"),
+    ("runs/enhanced_trial040/weights/best.pt", "models/trial040/best.pt"),
+    ("runs/enhanced_trial040/weights/last.pt", "models/trial040/last.pt"),
 )
 
 
 def portable_destination(name: str) -> str:
     weights = {
         'models/official/yolov8n.pt': 'weights/yolov8n.pt',
-        'models/trial035_parent/best.pt': 'weights/trial035_parent_best.pt',
         'models/original/best.pt': 'weights/original_best.pt',
         'models/original/last.pt': 'reproducibility/checkpoints/original_last.pt',
-        'models/trial044_gpu_adaptation/best.pt': 'weights/trial044_best.pt',
-        'models/trial044_gpu_adaptation/last.pt': 'reproducibility/checkpoints/trial044_last.pt',
+        'models/trial040/best.pt': 'weights/trial040_best.pt',
+        'models/trial040/last.pt': 'reproducibility/checkpoints/trial040_last.pt',
     }
     if name in weights:
         return weights[name]
     if name.startswith(('configs/', 'manifests/', 'scripts/')):
         return 'reproducibility/' + name
-    if name.startswith('tools/') or name == 'pcb_mpdiou_loss.py':
+    if name.startswith('tools/'):
         return 'model_code/' + name
     return name
 
@@ -284,7 +274,7 @@ def export_portable_authorities(source_root: Path, run_root: Path, destination_r
     destination = destination_root / "reproducibility/manifests/dataset/authority"
     destination.mkdir(parents=True, exist_ok=True)
     records = []
-    for name in ("original_grouped_v1_train.txt", "original_grouped_v1_val.txt", "enhanced_trial044_ohem_train.txt", "enhanced_standard_val.txt"):
+    for name in ("original_grouped_v1_train.txt", "original_grouped_v1_val.txt", "trial040_oversampled_train.txt", "enhanced_standard_val.txt"):
         source = run_root / "authority" / name
         if name == "enhanced_standard_val.txt":
             # Ultralytics directory discovery sorts paths before validation.
@@ -327,7 +317,7 @@ def package(source_root: Path, run_root: Path, destination_root: Path) -> dict[s
         sys.path.insert(0, str(runtime_root / 'model_code'))
     from tools.run_local_vscode_comparison import write_comparison
     original = json.loads((destination_root / "results/metrics/original_clean_validation.json").read_text(encoding="utf-8"))
-    enhanced = json.loads((destination_root / "results/metrics/enhanced_clean_validation.json").read_text(encoding="utf-8"))
+    enhanced = json.loads((destination_root / "results/metrics/trial040_clean_validation.json").read_text(encoding="utf-8"))
     write_comparison(destination_root / "results/comparison", original, enhanced)
     for record in records:
         if record["destination"] in {"results/comparison/comparison.csv", "results/comparison/comparison.md"}:

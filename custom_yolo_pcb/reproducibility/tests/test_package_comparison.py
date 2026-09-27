@@ -167,7 +167,7 @@ def test_portable_authority_export_keeps_order_duplicates_and_exact_validation(t
     run = tmp_path / "run"
     destination = tmp_path / "publication"
     (run / "authority").mkdir(parents=True)
-    names = ("original_grouped_v1_train.txt", "original_grouped_v1_val.txt", "enhanced_trial044_ohem_train.txt")
+    names = ("original_grouped_v1_train.txt", "original_grouped_v1_val.txt", "trial040_oversampled_train.txt")
     for name in names:
         (run / "authority" / name).write_text("pcb_yolo_dataset/images/train/z.jpg\npcb_yolo_dataset/images/val/a.jpg\npcb_yolo_dataset/images/train/z.jpg\n", encoding="utf-8")
     val = source / "pcb_yolo_dataset/images/val"

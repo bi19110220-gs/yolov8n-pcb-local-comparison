@@ -1,28 +1,18 @@
-# Examiner Overview
+# Examiner overview
 
 ## Research question
 
-This package compares a fresh stock YOLOv8n baseline trained with the recorded
-grouped-v1 authority against a classification-head Trial 044 continuation that
-uses the recorded OHEM training view and a Trial 035 parent checkpoint.
+Does the selected Trial 040 YOLOv8n model outperform the original YOLOv8n baseline on one shared validation authority?
 
-## What is controlled
+## Controlled final evaluation
 
-- Both are six-class PCB defect detectors based on YOLOv8n.
-- Each run uses its exact recorded hyperparameters and validation authority.
-- Both publication records are validation-only.
-- Reproduction uses one local GPU worker at a time on Windows.
+- Both are six-class YOLOv8n detectors.
+- Both frozen best checkpoints use the same 3,416 validation images.
+- Image size, batch, confidence, IoU, maximum detections, augmentation, workers, and evaluation code are identical.
+- All reported comparison metrics are validation-only.
 
-## What is not controlled
+## Not controlled
 
-The runs intentionally use different recorded training authorities, image
-sizes, schedules, and starting checkpoints. They are not a controlled
-same-data ablation. Historical Trial 044 used CPU; the new execution is an RTX
-3080 adaptation and is not expected to be bit-identical.
+The training recipes differ in training view, image size, schedule, and hyperparameters. The comparison establishes which final model performs better under the shared evaluation contract; it does not isolate the cause.
 
-## Evidence package
-
-After terminal completion, the package includes exact configurations,
-normalized logs, training curves, clean-validation metrics, checkpoint hashes,
-and the final original-versus-enhanced comparison. Held-out test evaluation is
-outside version 1.0.0.
+Trial 040 starts from official `yolov8n.pt`. It does not continue from another trial's best checkpoint.

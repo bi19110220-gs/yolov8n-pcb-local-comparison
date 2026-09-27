@@ -1,8 +1,8 @@
-"""Run the approved original-versus-Trial044 local validation comparison.
+"""Run the approved original-versus-Trial040 local validation comparison.
 
 This runner is intentionally separate from the stateful top5 campaign. It writes
 only to a new versioned output directory, never evaluates the test split, and
-labels Trial044 as a CUDA adaptation because its recorded run used CPU.
+reproduces Trial040 as one fresh YOLOv8n training run.
 """
 
 from __future__ import annotations
@@ -39,17 +39,15 @@ DATASET_ROOT = ROOT / "dataset" / "pcb_yolo_dataset"
 PUBLISHED_AUTHORITY = ROOT / "reproducibility" / "manifests" / "dataset" / "authority"
 ORIGINAL_TRAIN_MANIFEST = PUBLISHED_AUTHORITY / "original_grouped_v1_train.txt"
 ORIGINAL_VAL_MANIFEST = PUBLISHED_AUTHORITY / "original_grouped_v1_val.txt"
-ENHANCED_TRAIN_MANIFEST = PUBLISHED_AUTHORITY / "enhanced_trial044_ohem_train.txt"
+ENHANCED_TRAIN_MANIFEST = PUBLISHED_AUTHORITY / "trial040_oversampled_train.txt"
 ENHANCED_VAL_MANIFEST = PUBLISHED_AUTHORITY / "enhanced_standard_val.txt"
-TRIAL044_CONFIG = ROOT / "reproducibility" / "configs" / "trial044_gpu_adaptation" / "historical_cpu_trial044.json"
-TRIAL035_BEST = ROOT / "weights" / "trial035_parent_best.pt"
+TRIAL040_CONFIG = ROOT / "reproducibility" / "configs" / "trial040" / "trial040.json"
 OFFICIAL_YOLOV8N = ROOT / "weights" / "yolov8n.pt"
 
 EXPECTED_HASHES = {
     "original_train": "b453321adecbf13015bfc4022aaf787dc6c61135af62f662e393390c26642392",
     "original_val": "bdafa2aee661aac03ab8ca7fad1ae551bbd754006454f3ab7a97289e776412a0",
-    "enhanced_train": "8a9a0712524b457e18c0553bb8b409737d599bcd2c13be66abd75c12489ba6e6",
-    "trial035_best": "073692d72d506d42bb5f4a995b1b36d55b5e8002e748e44b85b3fefdece8e5bd",
+    "enhanced_train": "36da9733b286192e489c6e54bc19e73f3fd7627ff3c4b0d02c14b9ab9540fa8f",
 }
 
 
@@ -106,8 +104,7 @@ def verify_packaged_inputs() -> dict[str, Any]:
         (ORIGINAL_VAL_MANIFEST, EXPECTED_HASHES["original_val"]),
         (ENHANCED_TRAIN_MANIFEST, EXPECTED_HASHES["enhanced_train"]),
         (ENHANCED_VAL_MANIFEST, None),
-        (TRIAL035_BEST, EXPECTED_HASHES["trial035_best"]),
-        (TRIAL044_CONFIG, None), (OFFICIAL_YOLOV8N, None),
+        (TRIAL040_CONFIG, None), (OFFICIAL_YOLOV8N, None),
     )
     return {"artifacts": [require_published_artifact(path, expected) for path, expected in paths], "test_split_used": False}
 
@@ -187,7 +184,7 @@ def require_enhanced_resume_context(
     authorities = json.loads(authority_path.read_text(encoding="utf-8"))
     for model, stem, train, val in (
         ("original", "original_grouped_v1", ORIGINAL_TRAIN_MANIFEST, ORIGINAL_VAL_MANIFEST),
-        ("enhanced", "enhanced_trial044", ENHANCED_TRAIN_MANIFEST, ENHANCED_VAL_MANIFEST),
+        ("enhanced", "enhanced_trial040", ENHANCED_TRAIN_MANIFEST, ENHANCED_VAL_MANIFEST),
     ):
         record = authorities.get(model, {})
         expected_yaml = output_dir / "authority" / f"{stem}_validation_only.yaml"
@@ -235,7 +232,7 @@ def require_enhanced_resume_context(
     if original.get("training") != training or training["epochs_logged"] != 100 or training["last_epoch"] != 100:
         raise PermissionError("original training completion evidence changed")
 
-    enhanced_run_dir = output_dir / "runs" / "enhanced_trial044_gpu_adaptation"
+    enhanced_run_dir = output_dir / "runs" / "enhanced_trial040"
     if enhanced_run_dir.exists() and any(enhanced_run_dir.iterdir()):
         raise FileExistsError(f"enhanced run directory is not empty: {enhanced_run_dir}")
     return state, authorities, original
@@ -277,13 +274,13 @@ def prepare_data_authorities(output_dir: Path) -> dict[str, dict[str, Any]]:
 
     original_train_copy = authority_dir / "original_grouped_v1_train.txt"
     original_val_copy = authority_dir / "original_grouped_v1_val.txt"
-    enhanced_train_copy = authority_dir / "enhanced_trial044_ohem_train.txt"
+    enhanced_train_copy = authority_dir / "trial040_oversampled_train.txt"
     enhanced_val_copy = authority_dir / "enhanced_standard_val.txt"
     for source, destination in ((ORIGINAL_TRAIN_MANIFEST, original_train_copy), (ORIGINAL_VAL_MANIFEST, original_val_copy), (ENHANCED_TRAIN_MANIFEST, enhanced_train_copy), (ENHANCED_VAL_MANIFEST, enhanced_val_copy)):
         materialize_manifest(source, destination, dataset_root=DATASET_ROOT)
 
     original_yaml = authority_dir / "original_grouped_v1_validation_only.yaml"
-    enhanced_yaml = authority_dir / "enhanced_trial044_validation_only.yaml"
+    enhanced_yaml = authority_dir / "enhanced_trial040_validation_only.yaml"
     _write_validation_only_yaml(
         original_yaml,
         train=original_train_copy,
@@ -310,7 +307,7 @@ def prepare_data_authorities(output_dir: Path) -> dict[str, dict[str, Any]]:
             "test_split_used": False,
         },
         "enhanced": {
-            "authority": "Trial044 20% OHEM train view plus standard validation",
+            "authority": "Trial040 Short x1.25 oversampled train view plus standard validation",
             "data_yaml": str(enhanced_yaml.resolve()),
             "train_manifest": str(enhanced_train_copy.resolve()),
             "val_manifest": str(enhanced_val_copy.resolve()),
@@ -422,9 +419,13 @@ def enhanced_train_args(
         {
             "data": str(data_yaml),
             "project": str(Path(output_dir) / "runs"),
-            "name": "enhanced_trial044_gpu_adaptation",
+            "name": "enhanced_trial040",
             "exist_ok": False,
             "device": select_device(),
+            "model": str(OFFICIAL_YOLOV8N),
+            "pretrained": True,
+            "deterministic": True,
+            "resume": False,
         }
     )
     return args
@@ -515,6 +516,17 @@ def clean_validation(
         "inference_latency_ms": float((metrics.speed or {}).get("inference", 0.0)),
         "parameters": int(sum(parameter.numel() for parameter in model.model.parameters())),
         "model_size_mb": checkpoint.stat().st_size / (1024 * 1024),
+        "authority_id": "grouped_v1_shared_validation",
+        "settings": {
+            "split": "val",
+            "imgsz": imgsz,
+            "batch": batch,
+            "conf": 0.001,
+            "iou": 0.7,
+            "max_det": 300,
+            "augment": False,
+            "workers": 0,
+        },
     }
 
 
@@ -551,8 +563,8 @@ def run_original(output_dir: Path, data_yaml: Path) -> dict[str, Any]:
         data_yaml,
         output_dir=output_dir,
         name="original_clean_val",
-        imgsz=640,
-        batch=8,
+        imgsz=1024,
+        batch=3,
     )
     record = {
         "model": "original_grouped_v1_yolov8n",
@@ -570,68 +582,57 @@ def run_original(output_dir: Path, data_yaml: Path) -> dict[str, Any]:
     return record
 
 
-def run_enhanced(output_dir: Path, data_yaml: Path) -> dict[str, Any]:
+def run_enhanced(
+    output_dir: Path, training_data_yaml: Path, evaluation_data_yaml: Path
+) -> dict[str, Any]:
     from ultralytics import YOLO
 
-    from tools.top5_classification_head_trainer import Top5ClassificationHeadTrainer
-    from tools.top5_mpdiou_trainer import assert_mpdiou_checkpoint_is_clean
-
-    parent_hash = require_hash(
-        TRIAL035_BEST, EXPECTED_HASHES["trial035_best"], "Trial035 parent checkpoint"
-    )
-    config = json.loads(TRIAL044_CONFIG.read_text(encoding="utf-8"))
-    args = enhanced_train_args(config, data_yaml, output_dir)
+    require_published_artifact(OFFICIAL_YOLOV8N)
+    config = json.loads(TRIAL040_CONFIG.read_text(encoding="utf-8"))
+    args = enhanced_train_args(config, training_data_yaml, output_dir)
     adaptation = {
         "source_candidate_id": config["candidate_id"],
         "source_device": config["device"],
         "adapted_device": select_device(),
-        "adaptation": "Automatic CUDA/CPU selection; all listed Trial044 training hyperparameters preserved",
-        "parent_checkpoint": str(TRIAL035_BEST.resolve()),
-        "parent_checkpoint_sha256": parent_hash,
+        "adaptation": "Automatic CUDA/CPU selection; Trial040 starts once from the official YOLOv8n checkpoint",
+        "initial_checkpoint": str(OFFICIAL_YOLOV8N.resolve()),
+        "initial_checkpoint_sha256": sha256(OFFICIAL_YOLOV8N),
         "test_split_used": False,
         "train_args": args,
     }
-    atomic_json(output_dir / "configs" / "enhanced_trial044_gpu_adaptation.json", adaptation)
+    atomic_json(output_dir / "configs" / "enhanced_trial040.json", adaptation)
 
     started = time.time()
-    model = YOLO(str(TRIAL035_BEST))
-    model.train(trainer=Top5ClassificationHeadTrainer, **args)
-    scope_audit = getattr(model.trainer, "classification_scope_audit", None)
-    if not isinstance(scope_audit, dict) or scope_audit.get("optimizer_parameter_ids_bound") is not True:
-        raise PermissionError("classification-head-only optimizer scope was not attested")
-    if scope_audit.get("trainable_tensors") != 24 or scope_audit.get("trainable_parameters") != 370_578:
-        raise PermissionError("classification-head-only scope changed")
+    model = YOLO(str(OFFICIAL_YOLOV8N))
+    model.train(**args)
 
     run_dir = output_dir / "runs" / args["name"]
     best = run_dir / "weights" / "best.pt"
     last = run_dir / "weights" / "last.pt"
     if not best.is_file() or not last.is_file():
         raise FileNotFoundError("enhanced training did not publish best.pt and last.pt")
-    assert_mpdiou_checkpoint_is_clean(best, expected_parameters=int(config["expected_parameters"]))
-    assert_mpdiou_checkpoint_is_clean(last, expected_parameters=int(config["expected_parameters"]))
     validation = clean_validation(
         best,
-        data_yaml,
+        evaluation_data_yaml,
         output_dir=output_dir,
         name="enhanced_clean_val",
         imgsz=1024,
         batch=3,
     )
     record = {
-        "model": "enhanced_trial044_gpu_adaptation",
+        "model": "enhanced_trial040",
         "source_candidate_id": config["candidate_id"],
-        "training_authority": "Trial044 OHEM train view plus standard validation",
+        "training_authority": "Trial040 fresh YOLOv8n with Short x1.25 oversampled train view",
         "device": "cuda:0" if select_device() == 0 else "cpu",
         "started_at_unix": started,
         "ended_at_unix": time.time(),
         "best_checkpoint": str(best.resolve()),
         "last_checkpoint": str(last.resolve()),
-        "scope_audit": scope_audit,
         "validation": validation,
         "training": _results_csv_summary(run_dir),
         "test_split_used": False,
     }
-    atomic_json(output_dir / "metrics" / "enhanced_clean_validation.json", record)
+    atomic_json(output_dir / "metrics" / "trial040_clean_validation.json", record)
     return record
 
 
@@ -667,7 +668,7 @@ def write_comparison(output_dir: Path, original: dict[str, Any], enhanced: dict[
     lines = [
         "# Local VS Code YOLOv8n comparison",
         "",
-        "> Method warning: the original and enhanced runs intentionally use different recorded training authorities. This is a reproduction comparison, not a same-data controlled ablation.",
+        "> Method warning: both checkpoints use the same frozen validation authority and settings, but their training authorities and recipes differ. This is not a one-variable ablation.",
         "",
         "| Model | Training authority | Device | Precision | Recall | mAP50 | mAP50-95 | Short AP50-95 | Training hours |",
         "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
@@ -735,7 +736,9 @@ def main() -> int:
                     f"Ultralytics version drift: expected 8.4.84, got {environment['ultralytics']}"
                 )
             enhanced = run_enhanced(
-                output_dir, Path(authorities["enhanced"]["data_yaml"])
+                output_dir,
+                Path(authorities["enhanced"]["data_yaml"]),
+                Path(authorities["original"]["data_yaml"]),
             )
             state.update(current_stage="comparison", enhanced_completed=True)
             atomic_json(state_path, state)
@@ -788,7 +791,11 @@ def main() -> int:
         state.update(current_stage="enhanced_training", original_completed=True)
         atomic_json(state_path, state)
 
-        enhanced = run_enhanced(output_dir, Path(authorities["enhanced"]["data_yaml"]))
+        enhanced = run_enhanced(
+            output_dir,
+            Path(authorities["enhanced"]["data_yaml"]),
+            Path(authorities["original"]["data_yaml"]),
+        )
         state.update(current_stage="comparison", enhanced_completed=True)
         atomic_json(state_path, state)
         write_comparison(output_dir, original, enhanced)

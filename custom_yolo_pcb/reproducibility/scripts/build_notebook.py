@@ -26,7 +26,7 @@ def build_notebook():
             """
 # PCB Quality Inspector — Enhanced YOLOv8n
 
-This is the main local Windows/VS Code workflow for the FYP comparison. It verifies the recorded Original YOLOv8n and Enhanced Trial 044 evidence, shows the saved validation results, optionally runs the complete guarded comparison, generates `app.py`, and starts the local six-class PCB inspector.
+This is the main local Windows/VS Code workflow for the FYP comparison. It verifies the recorded Original YOLOv8n and Trial 040 evidence, shows the saved validation results, optionally runs the complete guarded comparison, generates `app.py`, and starts the local six-class PCB inspector.
 
 **Scientific boundary:** the two models use different recorded training authorities, so this is not a controlled same-data ablation. Reported metrics are validation-only. The held-out test split is not used.
             """,
@@ -162,7 +162,7 @@ for chart in recorded["charts"]:
             """
 ## 4. Optional complete local training
 
-Leave `RUN_TRAINING = False` to use the included evidence. Setting it to `True` runs the preserved sequence once: Original training → Original clean validation → Enhanced Trial 044 training → Enhanced clean validation → comparison export. Output goes to a new `results/notebook_runs/YYYYMMDD_HHMMSS/` directory, and detailed logs stay in a sibling local log file instead of filling this notebook.
+Leave `RUN_TRAINING = False` to use the included evidence. Setting it to `True` runs the preserved sequence once: Original training → Original clean validation → Trial 040 training from official `yolov8n.pt` → Trial 040 clean validation → comparison export. Both models use the same grouped-v1 validation contract. Output goes to a new `results/notebook_runs/YYYYMMDD_HHMMSS/` directory, and detailed logs stay in a sibling local log file instead of filling this notebook.
             """,
             "training-heading",
         ),
@@ -192,7 +192,7 @@ else:
             """
 ## 5. Generate and start the local inspector
 
-The notebook is the canonical source for `app.py`. The generator reproduces the committed file byte-for-byte and refuses to overwrite unrelated handwritten content. The app loads only the included, hash-verified `weights/trial044_best.pt` checkpoint.
+The notebook is the canonical source for `app.py`. The generator reproduces the committed file byte-for-byte and refuses to overwrite unrelated handwritten content. The app loads only the included, hash-verified `weights/trial040_best.pt` checkpoint.
             """,
             "app-heading",
         ),
@@ -247,7 +247,7 @@ else:
 
 - **Defects detected — review required** means one or more boxes met the selected confidence threshold.
 - **No defects detected** means no boxes met that threshold; it is not a statement that the PCB passed quality control.
-- The app uses Enhanced Trial 044 only. The Original model remains in the notebook comparison and training sequence.
+- The app uses Trial 040 only. The Original model remains in the notebook comparison and training sequence.
 - Uploaded-image predictions do not change the recorded validation metrics.
             """,
             "interpretation",

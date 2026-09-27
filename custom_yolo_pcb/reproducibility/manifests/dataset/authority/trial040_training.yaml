@@ -1,6 +1,6 @@
 path: __USER_HOME__\project\simin fyp\pcb_yolo_dataset
-train: __SOURCE_ROOT__\authority\enhanced_trial044_ohem_train.txt
-val: __USER_HOME__\project\simin fyp\pcb_yolo_dataset\images\val
+train: __SOURCE_ROOT__\authority\trial040_oversampled_train.txt
+val: __SOURCE_ROOT__\authority\original_grouped_v1_val.txt
 nc: 6
 names:
 - missing_hole

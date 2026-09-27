@@ -18,7 +18,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Train original then Trial 044 GPU adaptation",
+      "label": "Train original then Trial 040",
       "type": "shell",
       "command": "powershell.exe",
       "args": [
@@ -37,7 +37,7 @@
       }
     },
     {
-      "label": "Resume Trial 044 enhanced stage only",
+      "label": "Resume Trial 040 same run only",
       "type": "shell",
       "command": "powershell.exe",
       "args": [

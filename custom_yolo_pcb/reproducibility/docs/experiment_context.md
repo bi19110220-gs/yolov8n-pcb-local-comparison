@@ -2,29 +2,12 @@
 
 ## Original model
 
-The original model starts from the official YOLOv8n checkpoint and trains for
-100 epochs on the grouped-v1 training manifest at 640-pixel resolution. Model
-selection and reporting use the grouped-v1 validation manifest.
+The original model starts from official YOLOv8n and trains for 100 epochs on the grouped-v1 training manifest at 640-pixel resolution.
 
-## Enhanced model
+## Trial 040
 
-The enhanced model starts from the Trial 035 parent checkpoint. Trial 044
-preserves the recorded OHEM training view, 1024-pixel resolution,
-classification-head-only optimization scope, and MPDIoU implementation. The
-recorded CPU device is adapted to CUDA device 0 for the RTX 3080 run; other
-listed training hyperparameters remain unchanged.
+Trial 040 starts from official `yolov8n.pt`, not another trial checkpoint. It trains for 330 epochs at 1024 pixels with AdamW and a Short x1.25 oversampled training view. Recovery may continue only the same run from its own last checkpoint.
 
 ## Evaluation
 
-Each best checkpoint receives a clean validation pass. Precision, recall, F1,
-mAP50, mAP50-95, per-class AP, model size, parameter count, latency, and
-training duration are recorded. No held-out test evaluation or test manifest
-is packaged. There is no globally held-out image set in the combined release:
-the original and enhanced authorities assign different roles to some images.
-Their metrics are not a controlled same-data ablation.
-
-## Reproducibility
-
-Publication files use repository-relative paths. When a source record contains
-a machine-specific path, the published copy is normalized and its original
-SHA-256 is retained in the provenance manifest.
+Both frozen best checkpoints are evaluated on the same grouped-v1 validation manifest with identical settings. Precision, recall, F1, mAP50, mAP50-95, per-class AP, model size, parameter count, and latency are recorded. No held-out test evaluation is packaged. Different training authorities mean the result is a model comparison, not a one-variable ablation.

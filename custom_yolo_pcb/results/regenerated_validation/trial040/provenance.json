@@ -1,0 +1,52 @@
+{
+  "authority_id": "grouped_v1_shared_validation",
+  "authority_manifest": "reproducibility/manifests/dataset/authority/original_grouped_v1_val.txt",
+  "authority_manifest_sha256": "b72bfd86af6b2e19b66ff1e336bdd03e2de776f6ea615f72ea71fa5dcfd62aac",
+  "checkpoint": "weights/trial040_best.pt",
+  "checkpoint_sha256": "0d050cd53a98c550fba1c29cf27c49b7889981ab7281db1c60eb481303ecaa0b",
+  "duration_seconds": 51.70979170000646,
+  "finished_at_utc": "2026-09-27T05:36:58.154517+00:00",
+  "label": "Matched validation-only evaluation; no training performed",
+  "metrics": {
+    "map50": 0.9947607386036587,
+    "map50_95": 0.8142347564759148,
+    "precision": 0.9954390395053262,
+    "recall": 0.9961547869756419
+  },
+  "model": "enhanced_trial040",
+  "output_sha256": {
+    "results/regenerated_validation/trial040/BoxF1_curve.png": "8828c699f3376c6579fb0a1c5a4d4127381ded48ef339c0345d6a070a1c4318a",
+    "results/regenerated_validation/trial040/BoxPR_curve.png": "d89d582cddde3257d2c595192f1346b997397a925f492662486f92a194354a21",
+    "results/regenerated_validation/trial040/BoxP_curve.png": "5e3d533e51ce828bf54264be20bd52b91551eac021276995582577a9333e355f",
+    "results/regenerated_validation/trial040/BoxR_curve.png": "9b53c18addb32c966aa9746f8374c5ac7806501cb7553a95bea357c7ca11a9a7",
+    "results/regenerated_validation/trial040/confusion_matrix.png": "0e4230f8cc48c5f4de3055a50a3319525b30deceb1fdfb0558648579db05febd",
+    "results/regenerated_validation/trial040/confusion_matrix_normalized.png": "cb7ca9305d39700600989eb347498cc92528c84a35714cbd6b433f3f699e80c9",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch0_labels.jpg": "e6d0cb35838a28b77d0980bc4110957258f611eb4dc208edd0a742a73b0fa828",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch0_pred.jpg": "7f151a18375887a627a697bf90ec4ac80dd34ae6092e8bbb3c3e48f4383572f5",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch1_labels.jpg": "733d17f521570007c889b5f542d7fcaf1b8108ab30385f20acb7b5bf9a6cb7d8",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch1_pred.jpg": "7028dda20df78bdd37bd012cedbb78232148c498240cfe9b34ed2fddcd9d46bf",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch2_labels.jpg": "cfe0dae6be7797a641eff93223e7327da1cea85a9c6d23e3153aef30e0c509a5",
+    "results/regenerated_validation/trial040/prediction_examples/val_batch2_pred.jpg": "47809ab5b0b6cc9fc0e6914c4d68299934b7bb3983b2b661c4dd2e1b655a0bd8"
+  },
+  "runtime": {
+    "gpu": "NVIDIA GeForce RTX 3080",
+    "python": "3.11.9",
+    "torch": "2.11.0+cu128",
+    "ultralytics": "8.4.84"
+  },
+  "schema": "matched_validation_provenance/v1",
+  "settings": {
+    "augment": false,
+    "batch": 3,
+    "conf": 0.001,
+    "imgsz": 1024,
+    "iou": 0.7,
+    "max_det": 300,
+    "split": "val",
+    "workers": 0
+  },
+  "source_data_yaml_sha256": "be908056849fbe201bd15f0685a8aff8ae15a080f2c90a5011abd5ae041745ce",
+  "started_at_utc": "2026-09-27T05:36:06.431873+00:00",
+  "test_split_used": false,
+  "training_performed": false
+}

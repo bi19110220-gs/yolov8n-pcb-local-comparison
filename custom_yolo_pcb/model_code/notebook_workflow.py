@@ -15,7 +15,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from inspector_core import sha256_file, verify_trial044_checkpoint
+from inspector_core import sha256_file, verify_trial040_checkpoint
 
 
 DATASET_RELEASE_URL = (
@@ -116,11 +116,11 @@ def verify_publication_inputs(package: Path) -> dict[str, str]:
     from tools.run_local_vscode_comparison import verify_packaged_inputs
 
     verify_packaged_inputs()
-    trial044 = verify_trial044_checkpoint(package)
+    trial040 = verify_trial040_checkpoint(package)
     original = package / "weights" / "original_best.pt"
     return {
         "original_best.pt": sha256_file(original),
-        "trial044_best.pt": sha256_file(trial044),
+        "trial040_best.pt": sha256_file(trial040),
         "test_split_used": "false",
     }
 
@@ -132,7 +132,7 @@ def display_recorded_results(package: Path) -> dict[str, Any]:
         rows = list(csv.DictReader(handle))
     charts = [
         package / "results" / "charts" / "original_training.png",
-        package / "results" / "charts" / "trial044_training.png",
+        package / "results" / "charts" / "trial040_training.png",
         package / "results" / "charts" / "final_comparison.png",
         package / "results" / "charts" / "per_class.png",
     ]

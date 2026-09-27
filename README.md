@@ -1,6 +1,6 @@
 # YOLOv8n PCB defect detection comparison
 
-A private, local Windows FYP project comparing Original YOLOv8n with the Enhanced Trial 044 model.
+A private, local Windows FYP project comparing the original YOLOv8n baseline with Trial 040.
 
 ## Start here
 
@@ -8,8 +8,8 @@ A private, local Windows FYP project comparing Original YOLOv8n with the Enhance
 2. Select the project `.venv` Python kernel.
 3. Click **Run All** to verify the package, view the recorded comparison, generate `app.py`, and start the local PCB inspector.
 
-The [beginner guide](custom_yolo_pcb/README.md) explains the one-time setup. The [results report](custom_yolo_pcb/RESULTS_REPORT.md) contains training curves, validation metrics, per-class results, confusion matrices, and examples.
+The [beginner guide](custom_yolo_pcb/README.md) explains setup. The [results report](custom_yolo_pcb/RESULTS_REPORT.md) contains the matched validation results, training curves, per-class metrics, confusion matrices, and examples.
 
-Private `v1.1.0` contains the notebook and local Streamlit application. The unchanged private [v1.0.0 Release](https://github.com/bi19110220-gs/yolov8n-pcb-local-comparison/releases/tag/v1.0.0) remains the single source for the 1.13 GB dataset ZIP; it is not uploaded again.
+Private `v1.1.0` introduced the notebook and local app. The unchanged private `v1.0.0` release remains the source of the dataset archive.
 
-The models use different recorded training authorities, so the comparison is descriptive rather than a controlled same-data ablation. Held-out test evaluation was not run; all reported performance is validation-only.
+Trial 040 and the original were evaluated on the same frozen 3,416-image grouped-v1 validation manifest with identical settings. Trial 040 reaches 0.814235 mAP50-95 versus 0.529946 for the original. Their training recipes differ, so this is a fair model comparison but not a one-variable ablation. No held-out test split was evaluated.

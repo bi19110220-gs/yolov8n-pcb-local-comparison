@@ -53,7 +53,7 @@ def test_notebook_contains_no_machine_specific_paths_or_test_split_access():
     assert slash_user_root not in source
     assert "split='test'" not in source
     assert 'split="test"' not in source
-    assert "trial044_best.pt" in source
+    assert "trial040_best.pt" in source
     assert "http://localhost:8501" in source
 
 

@@ -17,7 +17,7 @@ from inspector_core import (
     render_annotated_png,
     summarise_detections,
     validate_pixel_count,
-    verify_trial044_checkpoint,
+    verify_trial040_checkpoint,
 )
 
 
@@ -108,13 +108,13 @@ def test_class_mapping_and_fixed_inference_contract():
     }
 
 
-def test_trial044_checkpoint_is_fixed_and_hash_verified(tmp_path):
-    assert verify_trial044_checkpoint(PACKAGE) == PACKAGE / "weights" / "trial044_best.pt"
+def test_trial040_checkpoint_is_fixed_and_hash_verified(tmp_path):
+    assert verify_trial040_checkpoint(PACKAGE) == PACKAGE / "weights" / "trial040_best.pt"
     package = tmp_path / "custom_yolo_pcb"
     (package / "weights").mkdir(parents=True)
-    (package / "weights" / "trial044_best.pt").write_bytes(b"tampered")
+    (package / "weights" / "trial040_best.pt").write_bytes(b"tampered")
     with pytest.raises(CheckpointVerificationError, match="hash verification failed"):
-        verify_trial044_checkpoint(package)
+        verify_trial040_checkpoint(package)
 
 
 def test_normalised_rows_are_sorted_and_summarised():

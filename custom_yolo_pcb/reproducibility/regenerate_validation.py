@@ -10,7 +10,10 @@ PACKAGE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PACKAGE / 'model_code'))
 from tools import run_local_vscode_comparison as runner
 
-MODELS = {'original': dict(checkpoint='original_best.pt', authority='original', imgsz=640, batch=8), 'trial044': dict(checkpoint='trial044_best.pt', authority='enhanced', imgsz=1024, batch=3)}
+MODELS = {
+    'original': dict(checkpoint='original_best.pt', authority='original', imgsz=1024, batch=3),
+    'trial040': dict(checkpoint='trial040_best.pt', authority='original', imgsz=1024, batch=3),
+}
 VALIDATION_SETTINGS = dict(split='val', conf=0.001, iou=0.7, max_det=300, augment=False, plots=True, workers=0)
 
 

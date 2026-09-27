@@ -4,13 +4,13 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_required_directories_exist():
-    required = {'model_code/tools', 'reproducibility/configs/original', 'reproducibility/configs/trial035_parent', 'reproducibility/configs/trial044_gpu_adaptation', 'reproducibility/docs', 'reproducibility/manifests/dataset', 'reproducibility/manifests/hashes', 'weights', 'results/original', 'results/trial044_gpu_adaptation', 'results/comparison', 'reproducibility/scripts/package', 'reproducibility/scripts/verify', 'reproducibility/tests'}
+    required = {'model_code/tools', 'reproducibility/configs/original', 'reproducibility/configs/trial040', 'reproducibility/docs', 'reproducibility/manifests/dataset', 'reproducibility/manifests/hashes', 'weights', 'results/original', 'results/trial040', 'results/comparison', 'reproducibility/scripts/package', 'reproducibility/scripts/verify', 'reproducibility/tests'}
     assert not {path for path in required if not (ROOT / path).is_dir()}
 
 
 def test_readme_states_reproduction_boundaries():
     text = (ROOT / 'README.md').read_text(encoding='utf-8')
-    for phrase in ('Windows', 'VS Code', 'Ultralytics 8.4.84', 'RTX 3080 adaptation', 'different recorded training authorities', 'not a controlled same-data ablation', 'Held-out test evaluation was not run'):
+    for phrase in ('Windows', 'VS Code', 'Ultralytics 8.4.84', 'RTX 3080', 'same grouped-v1 validation manifest', 'not a one-variable ablation', 'held-out test split'):
         assert phrase in text
 
 

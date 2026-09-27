@@ -18,7 +18,7 @@ def completed_original(tmp_path, monkeypatch):
     manifest_names = {
         "ORIGINAL_TRAIN_MANIFEST": "original_grouped_v1_train.txt",
         "ORIGINAL_VAL_MANIFEST": "original_grouped_v1_val.txt",
-        "ENHANCED_TRAIN_MANIFEST": "enhanced_trial044_ohem_train.txt",
+        "ENHANCED_TRAIN_MANIFEST": "trial040_oversampled_train.txt",
         "ENHANCED_VAL_MANIFEST": "enhanced_standard_val.txt",
     }
     expected_keys = ("original_train", "original_val", "enhanced_train", None)
@@ -28,12 +28,12 @@ def completed_original(tmp_path, monkeypatch):
         manifest.write_text("pcb_yolo_dataset/images/pool/a.jpg\n", encoding="utf-8")
         monkeypatch.setattr(runner, attribute, manifest)
         artifacts.append({"destination": manifest.relative_to(root).as_posix(), "source_sha256": runner.EXPECTED_HASHES.get(key, "0" * 64), "published_sha256": runner.sha256(manifest)})
-    for attribute, relative in (("TRIAL035_BEST", "models/trial035_parent/best.pt"), ("OFFICIAL_YOLOV8N", "models/official/yolov8n.pt"), ("TRIAL044_CONFIG", "configs/trial044.json")):
+    for attribute, relative in (("OFFICIAL_YOLOV8N", "models/official/yolov8n.pt"), ("TRIAL040_CONFIG", "configs/trial040.json")):
         path = root / relative
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(b"fixture")
         monkeypatch.setattr(runner, attribute, path)
-        artifacts.append({"destination": relative, "source_sha256": runner.EXPECTED_HASHES["trial035_best"] if attribute == "TRIAL035_BEST" else runner.sha256(path), "published_sha256": runner.sha256(path)})
+        artifacts.append({"destination": relative, "source_sha256": runner.sha256(path), "published_sha256": runner.sha256(path)})
     runner.atomic_json(root / "reproducibility/manifests/hashes/artifact_provenance.json", {"artifacts": artifacts})
     for relative in ("images/pool/a.jpg", "labels/pool/a.txt"):
         file = dataset / relative

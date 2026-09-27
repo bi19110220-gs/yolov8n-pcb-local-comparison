@@ -1,12 +1,30 @@
 {
-  "enhanced": {
-    "authority": "Trial044 20% OHEM train view plus standard validation",
-    "data_yaml": "__SOURCE_ROOT__\\authority\\enhanced_trial044_validation_only.yaml",
+  "comparison_validation": {
+    "authority": "grouped_v1_shared_validation",
+    "entries": 3416,
+    "manifest": "__SOURCE_ROOT__\\authority\\original_grouped_v1_val.txt",
+    "sha256": "bdafa2aee661aac03ab8ca7fad1ae551bbd754006454f3ab7a97289e776412a0",
+    "settings": {
+      "augment": false,
+      "batch": 3,
+      "conf": 0.001,
+      "imgsz": 1024,
+      "iou": 0.7,
+      "max_det": 300,
+      "split": "val",
+      "workers": 0
+    },
+    "test_split_used": false
+  },
+  "trial040": {
+    "authority": "Short x1.25 oversampled training view",
+    "data_yaml": "__SOURCE_ROOT__\\authority\\trial040_training.yaml",
+    "initialization": "official yolov8n.pt",
+    "previous_trial_checkpoint_used": false,
     "test_split_used": false,
-    "train_entries": 6354,
-    "train_manifest": "__SOURCE_ROOT__\\authority\\enhanced_trial044_ohem_train.txt",
-    "train_sha256": "8a9a0712524b457e18c0553bb8b409737d599bcd2c13be66abd75c12489ba6e6",
-    "val_path": "__USER_HOME__\\project\\simin fyp\\pcb_yolo_dataset\\images\\val"
+    "train_entries": 5330,
+    "train_manifest": "__SOURCE_ROOT__\\authority\\trial040_oversampled_train.txt",
+    "train_sha256": "36da9733b286192e489c6e54bc19e73f3fd7627ff3c4b0d02c14b9ab9540fa8f"
   },
   "original": {
     "authority": "grouped-v1",

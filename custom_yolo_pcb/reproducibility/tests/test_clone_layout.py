@@ -31,7 +31,7 @@ def test_clone_layout_comes_from_git_files_not_empty_worktree_directories(tmp_pa
 
 
 def test_layout_rejects_empty_model_and_config_directories(tmp_path):
-    for name in ("models/original", "models/trial035_parent", "configs/original"):
+    for name in ("models/original", "models/trial040", "configs/original"):
         (tmp_path / name).mkdir(parents=True)
     failures = verify_clone.verify_layout(tmp_path)
     assert any("weights/original_best.pt" in failure for failure in failures)

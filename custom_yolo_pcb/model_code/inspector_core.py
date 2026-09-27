@@ -1,4 +1,4 @@
-"""Pure, testable helpers for the in-memory Trial 044 PCB inspector."""
+"""Pure, testable helpers for the in-memory Trial 040 PCB inspector."""
 
 from __future__ import annotations
 
@@ -14,7 +14,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 MAX_PIXELS = 20_000_000
-TRIAL044_SHA256 = "4bdde7e5dc60258de06fceb66ed25fd5814eafa3d6108a5dfb0244d59de0274d"
+TRIAL040_SHA256 = "0d050cd53a98c550fba1c29cf27c49b7889981ab7281db1c60eb481303ecaa0b"
 
 EXPECTED_CLASSES = {
     0: "missing_hole",
@@ -59,7 +59,7 @@ class UploadValidationError(ValueError):
 
 
 class CheckpointVerificationError(PermissionError):
-    """Raised when the fixed Trial 044 checkpoint contract is violated."""
+    """Raised when the fixed Trial 040 checkpoint contract is violated."""
 
 
 def sha256_file(path: Path) -> str:
@@ -118,16 +118,16 @@ def assert_class_mapping(names: Mapping[int, str] | Sequence[str]) -> None:
         )
 
 
-def verify_trial044_checkpoint(package: Path) -> Path:
+def verify_trial040_checkpoint(package: Path) -> Path:
     package = Path(package).resolve()
-    checkpoint = package / "weights" / "trial044_best.pt"
+    checkpoint = package / "weights" / "trial040_best.pt"
     if not checkpoint.is_file():
         raise CheckpointVerificationError(
-            "The fixed Trial 044 checkpoint is missing: weights/trial044_best.pt"
+            "The fixed Trial 040 checkpoint is missing: weights/trial040_best.pt"
         )
-    if sha256_file(checkpoint) != TRIAL044_SHA256:
+    if sha256_file(checkpoint) != TRIAL040_SHA256:
         raise CheckpointVerificationError(
-            "Trial 044 checkpoint hash verification failed. Restore the published file."
+            "Trial 040 checkpoint hash verification failed. Restore the published file."
         )
     return checkpoint
 
