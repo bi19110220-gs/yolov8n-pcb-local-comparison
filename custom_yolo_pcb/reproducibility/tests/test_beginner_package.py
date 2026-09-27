@@ -92,6 +92,22 @@ def test_recorded_comparison_uses_one_validation_contract():
     }
 
 
+def test_public_surfaces_use_selected_enhanced_name_with_internal_traceability():
+    root_readme = (ROOT / 'README.md').read_text(encoding='utf-8')
+    package_readme = (PACKAGE / 'README.md').read_text(encoding='utf-8')
+    report = (PACKAGE / 'RESULTS_REPORT.md').read_text(encoding='utf-8')
+    app_template = (PACKAGE / 'model_code/app_template.py').read_text(encoding='utf-8')
+    notebook_builder = (PACKAGE / 'reproducibility/scripts/build_notebook.py').read_text(encoding='utf-8')
+    chart_builder = (PACKAGE / 'reproducibility/generate_charts.py').read_text(encoding='utf-8')
+
+    for surface in (root_readme, package_readme, report, app_template, notebook_builder):
+        assert 'Selected Enhanced YOLOv8n' in surface
+        assert 'Enhanced Trial 040' not in surface
+    assert "('Enhanced YOLOv8n', 'trial040', 'trial040')" in chart_builder
+    assert 'public name for internal candidate `Trial 040`' in report
+    assert '`weights/trial040_best.pt`' in report
+
+
 def test_active_package_contains_no_superseded_trial_contract():
     candidates = subprocess.check_output(
         ['git', 'ls-files', '--cached', '--others', '--exclude-standard', '-z'],

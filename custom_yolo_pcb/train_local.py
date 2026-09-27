@@ -1,4 +1,4 @@
-"""Train the original model first, followed by the preserved Trial 040 recipe."""
+"""Train the original model first, followed by the Selected Enhanced YOLOv8n recipe."""
 from pathlib import Path
 import sys
 

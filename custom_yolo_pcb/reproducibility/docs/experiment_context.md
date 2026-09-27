@@ -4,9 +4,9 @@
 
 The original model starts from official YOLOv8n and trains for 100 epochs on the grouped-v1 training manifest at 640-pixel resolution.
 
-## Trial 040
+## Selected Enhanced YOLOv8n
 
-Trial 040 starts from official `yolov8n.pt`, not another trial checkpoint. It trains for 330 epochs at 1024 pixels with AdamW and a Short x1.25 oversampled training view. Recovery may continue only the same run from its own last checkpoint.
+The Selected Enhanced YOLOv8n starts from official `yolov8n.pt`, not another candidate checkpoint. It trains for 330 epochs at 1024 pixels with AdamW and a Short x1.25 oversampled training view. Recovery may continue only the same run from its own last checkpoint. The internal Trial 040 identifier is retained for provenance.
 
 ## Evaluation
 

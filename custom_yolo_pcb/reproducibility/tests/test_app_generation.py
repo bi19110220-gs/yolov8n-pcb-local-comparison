@@ -33,7 +33,7 @@ def test_generator_is_idempotent_and_refuses_handwritten_content(tmp_path):
 def test_app_source_contains_fixed_model_and_explicit_interaction_contract():
     assert APP_SOURCE.startswith(GENERATED_MARKER)
     for text in (
-        "PCB Quality Inspector — Enhanced YOLOv8n",
+        "PCB Quality Inspector — Selected Enhanced YOLOv8n",
         "@st.cache_resource",
         '"Inspect PCB"',
         'st.tabs(["Detection result", "Original image"])',

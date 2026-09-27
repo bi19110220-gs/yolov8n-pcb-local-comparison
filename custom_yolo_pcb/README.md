@@ -1,6 +1,6 @@
 # PCB Quality Inspector — local VS Code guide
 
-This Windows package compares the original YOLOv8n baseline with Trial 040, can deliberately rerun both training recipes, and provides a local Streamlit PCB inspector using the hash-verified Trial 040 checkpoint. It is local only; Vercel is not used.
+This Windows package compares the original YOLOv8n baseline with the Selected Enhanced YOLOv8n, can deliberately rerun both training recipes, and provides a local Streamlit PCB inspector using the hash-verified enhanced checkpoint. It is local only; Vercel is not used.
 
 ## 1. One-time setup
 
@@ -30,11 +30,11 @@ LAUNCH_STREAMLIT = True
 RECOVERY_OUTPUT_DIR = None
 ```
 
-Set `RUN_TRAINING = True` only when a full rerun is intended. Trial 040 starts from the packaged official `yolov8n.pt`; it does not start from another trial's best checkpoint. A recovery may resume only the same failed run from its own state. Final comparison validation uses the same grouped-v1 validation manifest and settings for both models, so it is fair for model selection but not a one-variable ablation.
+Set `RUN_TRAINING = True` only when a full rerun is intended. The Selected Enhanced YOLOv8n starts from the packaged official `yolov8n.pt`; it does not start from another candidate's best checkpoint. A recovery may resume only the same failed run from its own state. Final comparison validation uses the same grouped-v1 validation manifest and settings for both models, so it is fair for model selection but not a one-variable ablation.
 
 ## 4. Use the inspector
 
-The app loads `weights/trial040_best.pt` after verifying SHA-256. It detects missing hole, mouse bite, open circuit, short, spur, and spurious copper. Input size is 1024, IoU is 0.70, maximum detections are 300, and test-time augmentation is off.
+The app loads the Selected Enhanced YOLOv8n from the internally traceable `weights/trial040_best.pt` file after verifying SHA-256. It detects missing hole, mouse bite, open circuit, short, spur, and spurious copper. Input size is 1024, IoU is 0.70, maximum detections are 300, and test-time augmentation is off.
 
 ```powershell
 & .\.venv\Scripts\python.exe -m streamlit run app.py

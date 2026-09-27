@@ -674,8 +674,14 @@ def write_comparison(output_dir: Path, original: dict[str, Any], enhanced: dict[
         "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for row in rows:
+        display_model = (
+            "Original YOLOv8n"
+            if row["model"] == "original_grouped_v1_yolov8n"
+            else "Enhanced YOLOv8n"
+        )
+        display_authority = row["training_authority"].replace("Trial040 ", "")
         lines.append(
-            f"| {row['model']} | {row['training_authority']} | {row['device']} | "
+            f"| {display_model} | {display_authority} | {row['device']} | "
             f"{row['precision']:.6f} | {row['recall']:.6f} | {row['map50']:.6f} | "
             f"{row['map50_95']:.6f} | {row['short_ap50_95']:.6f} | "
             f"{row['training_seconds'] / 3600:.3f} |"

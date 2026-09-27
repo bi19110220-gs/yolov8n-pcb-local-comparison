@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 PACKAGE = Path(__file__).resolve().parents[1]
-MODELS = {'original': ('Original', 'original', 'original'), 'trial040': ('Trial 040', 'trial040', 'trial040')}
+MODELS = {'original': ('Original YOLOv8n', 'original', 'original'), 'trial040': ('Enhanced YOLOv8n', 'trial040', 'trial040')}
 COLORS = {'original': '#2266aa', 'trial040': '#d47126'}
 
 

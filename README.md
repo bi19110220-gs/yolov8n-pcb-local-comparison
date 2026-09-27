@@ -1,6 +1,6 @@
 # YOLOv8n PCB defect detection comparison
 
-A private, local Windows FYP project comparing the original YOLOv8n baseline with Trial 040.
+A private, local Windows FYP project comparing the original YOLOv8n baseline with the Selected Enhanced YOLOv8n.
 
 ## Start here
 
@@ -12,4 +12,4 @@ The [beginner guide](custom_yolo_pcb/README.md) explains setup. The [results rep
 
 Private `v1.1.0` introduced the notebook and local app. The unchanged private `v1.0.0` release remains the source of the dataset archive.
 
-Trial 040 and the original were evaluated on the same frozen 3,416-image grouped-v1 validation manifest with identical settings. Trial 040 reaches 0.814235 mAP50-95 versus 0.529946 for the original. Their training recipes differ, so this is a fair model comparison but not a one-variable ablation. No held-out test split was evaluated.
+The Selected Enhanced YOLOv8n and the original were evaluated on the same frozen 3,416-image grouped-v1 validation manifest with identical settings. The enhanced model reaches 0.814235 mAP50-95 versus 0.529946 for the original. Their training recipes differ, so this is a fair model comparison but not a one-variable ablation. No held-out test split was evaluated.

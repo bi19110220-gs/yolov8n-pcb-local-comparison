@@ -18,7 +18,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Train original then Trial 040",
+      "label": "Train original then Selected Enhanced YOLOv8n",
       "type": "shell",
       "command": "powershell.exe",
       "args": [
@@ -37,7 +37,7 @@
       }
     },
     {
-      "label": "Resume Trial 040 same run only",
+      "label": "Resume enhanced-model same run only",
       "type": "shell",
       "command": "powershell.exe",
       "args": [

@@ -24,9 +24,9 @@ def build_notebook():
     cells = [
         markdown(
             """
-# PCB Quality Inspector — Enhanced YOLOv8n
+# PCB Quality Inspector — Selected Enhanced YOLOv8n
 
-This is the main local Windows/VS Code workflow for the FYP comparison. It verifies the recorded Original YOLOv8n and Trial 040 evidence, shows the saved validation results, optionally runs the complete guarded comparison, generates `app.py`, and starts the local six-class PCB inspector.
+This is the main local Windows/VS Code workflow for the FYP comparison. It verifies the recorded Original YOLOv8n and Selected Enhanced YOLOv8n evidence, shows the saved validation results, optionally runs the complete guarded comparison, generates `app.py`, and starts the local six-class PCB inspector.
 
 **Scientific boundary:** the two models use different recorded training authorities, so this is not a controlled same-data ablation. Reported metrics are validation-only. The held-out test split is not used.
             """,
@@ -142,6 +142,14 @@ metric_columns = [
     "parameters", "model_size_mb", "training_seconds",
 ]
 metrics = pd.DataFrame(recorded["metrics"])[metric_columns]
+metrics["model"] = metrics["model"].replace({
+    "original_grouped_v1_yolov8n": "Original YOLOv8n",
+    "enhanced_trial040": "Enhanced YOLOv8n",
+})
+metrics["training_authority"] = metrics["training_authority"].replace({
+    "Trial040 fresh YOLOv8n with Short x1.25 oversampled train view":
+        "Fresh YOLOv8n with Short x1.25 oversampled train view",
+})
 for column in ("precision", "recall", "f1", "map50", "map50_95", "short_ap50_95"):
     metrics[column] = pd.to_numeric(metrics[column]).round(4)
 display(metrics)
@@ -162,7 +170,7 @@ for chart in recorded["charts"]:
             """
 ## 4. Optional complete local training
 
-Leave `RUN_TRAINING = False` to use the included evidence. Setting it to `True` runs the preserved sequence once: Original training → Original clean validation → Trial 040 training from official `yolov8n.pt` → Trial 040 clean validation → comparison export. Both models use the same grouped-v1 validation contract. Output goes to a new `results/notebook_runs/YYYYMMDD_HHMMSS/` directory, and detailed logs stay in a sibling local log file instead of filling this notebook.
+Leave `RUN_TRAINING = False` to use the included evidence. Setting it to `True` runs the preserved sequence once: Original training → Original clean validation → Selected Enhanced YOLOv8n training from official `yolov8n.pt` → enhanced-model clean validation → comparison export. Both models use the same grouped-v1 validation contract. Output goes to a new `results/notebook_runs/YYYYMMDD_HHMMSS/` directory, and detailed logs stay in a sibling local log file instead of filling this notebook.
             """,
             "training-heading",
         ),
@@ -192,7 +200,7 @@ else:
             """
 ## 5. Generate and start the local inspector
 
-The notebook is the canonical source for `app.py`. The generator reproduces the committed file byte-for-byte and refuses to overwrite unrelated handwritten content. The app loads only the included, hash-verified `weights/trial040_best.pt` checkpoint.
+The notebook is the canonical source for `app.py`. The generator reproduces the committed file byte-for-byte and refuses to overwrite unrelated handwritten content. The app presents the included, hash-verified `weights/trial040_best.pt` checkpoint as the Selected Enhanced YOLOv8n while retaining its internal filename for traceability.
             """,
             "app-heading",
         ),
@@ -247,7 +255,7 @@ else:
 
 - **Defects detected — review required** means one or more boxes met the selected confidence threshold.
 - **No defects detected** means no boxes met that threshold; it is not a statement that the PCB passed quality control.
-- The app uses Trial 040 only. The Original model remains in the notebook comparison and training sequence.
+- The app uses the Selected Enhanced YOLOv8n only. The Original model remains in the notebook comparison and training sequence.
 - Uploaded-image predictions do not change the recorded validation metrics.
             """,
             "interpretation",

@@ -2,7 +2,7 @@
 
 ## Research question
 
-Does the selected Trial 040 YOLOv8n model outperform the original YOLOv8n baseline on one shared validation authority?
+Does the Selected Enhanced YOLOv8n outperform the original YOLOv8n baseline on one shared validation authority?
 
 ## Controlled final evaluation
 
@@ -15,4 +15,4 @@ Does the selected Trial 040 YOLOv8n model outperform the original YOLOv8n baseli
 
 The training recipes differ in training view, image size, schedule, and hyperparameters. The comparison establishes which final model performs better under the shared evaluation contract; it does not isolate the cause.
 
-Trial 040 starts from official `yolov8n.pt`. It does not continue from another trial's best checkpoint.
+The Selected Enhanced YOLOv8n starts from official `yolov8n.pt`. It does not continue from another candidate's best checkpoint. Its Trial 040 identifier remains only in internal provenance and filenames.

@@ -1,4 +1,4 @@
-"""Pure, testable helpers for the in-memory Trial 040 PCB inspector."""
+"""Pure, testable helpers for the in-memory Selected Enhanced YOLOv8n inspector."""
 
 from __future__ import annotations
 
@@ -59,7 +59,7 @@ class UploadValidationError(ValueError):
 
 
 class CheckpointVerificationError(PermissionError):
-    """Raised when the fixed Trial 040 checkpoint contract is violated."""
+    """Raised when the fixed enhanced-model checkpoint contract is violated."""
 
 
 def sha256_file(path: Path) -> str:
@@ -123,11 +123,11 @@ def verify_trial040_checkpoint(package: Path) -> Path:
     checkpoint = package / "weights" / "trial040_best.pt"
     if not checkpoint.is_file():
         raise CheckpointVerificationError(
-            "The fixed Trial 040 checkpoint is missing: weights/trial040_best.pt"
+            "The fixed enhanced-model checkpoint is missing: weights/trial040_best.pt"
         )
     if sha256_file(checkpoint) != TRIAL040_SHA256:
         raise CheckpointVerificationError(
-            "Trial 040 checkpoint hash verification failed. Restore the published file."
+            "Enhanced-model checkpoint hash verification failed. Restore the published file."
         )
     return checkpoint
 
