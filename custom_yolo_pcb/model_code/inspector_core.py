@@ -1,4 +1,4 @@
-"""Pure, testable helpers for the in-memory Selected Enhanced YOLOv8n inspector."""
+"""Testable helpers for the in-memory PCB inspector and historical notebooks."""
 
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps, UnidentifiedImageError
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
 MAX_PIXELS = 20_000_000
 TRIAL040_SHA256 = "0d050cd53a98c550fba1c29cf27c49b7889981ab7281db1c60eb481303ecaa0b"
+AW09_SHA256 = "21650e4249bded2bcc974922c705a1ea29c066671017a00177ca8eca27a6a1c0"
 
 EXPECTED_CLASSES = {
     0: "missing_hole",
@@ -130,6 +131,28 @@ def verify_trial040_checkpoint(package: Path) -> Path:
             "Enhanced-model checkpoint hash verification failed. Restore the published file."
         )
     return checkpoint
+
+
+def verify_aw09_checkpoint(package: Path) -> Path:
+    """Verify the deployment copy without changing the original training artifact."""
+    checkpoint = Path(package).resolve() / "weights" / "aw09_best.pt"
+    if not checkpoint.is_file():
+        raise CheckpointVerificationError(
+            "AW09 is missing: weights/aw09_best.pt. Restore it from the repository."
+        )
+    if sha256_file(checkpoint) != AW09_SHA256:
+        raise CheckpointVerificationError(
+            "AW09 checkpoint hash verification failed. Restore the published file."
+        )
+    return checkpoint
+
+
+def predict_image(model, image: Image.Image, confidence: float, device):
+    """Pass RGB PIL input to YOLO; a NumPy RGB array would be treated as BGR."""
+    return model.predict(
+        source=image, conf=confidence, device=device, verbose=False,
+        **INFERENCE_SETTINGS,
+    )
 
 
 def normalise_detections(result, names: Mapping[int, str] | Sequence[str]) -> list[dict]:
