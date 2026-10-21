@@ -1,53 +1,55 @@
-# PCB Quality Inspector — local VS Code guide
+# AW09 PCB Quality Inspector — local guide
 
-This Windows package compares the original YOLOv8n baseline with the Selected Enhanced YOLOv8n, can deliberately rerun both training recipes, and provides a local Streamlit PCB inspector using the hash-verified enhanced checkpoint. It is local only; Vercel is not used.
+Use the included AW09 YOLOv8n model to inspect images locally. No dataset download or model training is required.
 
-## 1. One-time setup
+## One-time setup
 
-Open this folder in VS Code and run:
+Open this folder in a terminal. With Python 3.11 installed:
 
 ```powershell
 py -3.11 -m venv .venv
 & .\.venv\Scripts\python.exe -m pip install --upgrade pip
-& .\.venv\Scripts\python.exe -m pip install "torch==2.11.0+cu128" torchvision --index-url https://download.pytorch.org/whl/cu128
 & .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-The recorded environment used Python 3.11.9, PyTorch 2.11.0+cu128, Ultralytics 8.4.84, and an NVIDIA RTX 3080. CPU fallback is supported but training is much slower.
-
-## 2. Prepare the dataset
-
-Download `pcb_yolo_train_val_v1.0.0.zip` from the private [v1.0.0 release](https://github.com/bi19110220-gs/yolov8n-pcb-local-comparison/releases/tag/v1.0.0) and place it at `release-assets/pcb_yolo_train_val_v1.0.0.zip`. The notebook verifies its SHA-256 before extraction. The ZIP and extracted data remain outside Git.
-
-## 3. Normal workflow
-
-Open `PCB_Quality_Inspector.ipynb`, click **Select Kernel**, choose `custom_yolo_pcb\.venv\Scripts\python.exe`, and click **Run All**. Safe defaults do not train:
-
-```python
-RUN_TRAINING = False
-RUN_RECOVERY = False
-LAUNCH_STREAMLIT = True
-RECOVERY_OUTPUT_DIR = None
-```
-
-Set `RUN_TRAINING = True` only when a full rerun is intended. The Selected Enhanced YOLOv8n starts from the packaged official `yolov8n.pt`; it does not start from another candidate's best checkpoint. A recovery may resume only the same failed run from its own state. Final comparison validation uses the same grouped-v1 validation manifest and settings for both models, so it is fair for model selection but not a one-variable ablation.
-
-## 4. Use the inspector
-
-The app loads the Selected Enhanced YOLOv8n from the internally traceable `weights/trial040_best.pt` file after verifying SHA-256. It detects missing hole, mouse bite, open circuit, short, spur, and spurious copper. Input size is 1024, IoU is 0.70, maximum detections are 300, and test-time augmentation is off.
+The app uses CUDA device 0 when PyTorch reports CUDA available, otherwise CPU. CPU inspection is supported but can be slower. The recorded environment used Python 3.11.9, PyTorch 2.11.0+cu128, Ultralytics 8.4.84 and an RTX 3080. For that NVIDIA environment, install the matching PyTorch build before the requirements:
 
 ```powershell
-& .\.venv\Scripts\python.exe -m streamlit run app.py
+& .\.venv\Scripts\python.exe -m pip install "torch==2.11.0+cu128" torchvision --index-url https://download.pytorch.org/whl/cu128
 ```
 
-“No defects detected” means only that no prediction met the chosen confidence threshold; it is not a quality-control pass.
-
-## 5. Verify
+## Run the dashboard
 
 ```powershell
-& .\.venv\Scripts\python.exe -m pytest reproducibility\tests -q
-& .\.venv\Scripts\python.exe reproducibility\scripts\verify\verify_package.py --root ..
-& .\.venv\Scripts\python.exe reproducibility\scripts\verify\verify_clone.py --root ..
+& .\.venv\Scripts\python.exe app.py
 ```
 
-These checks do not train models or access a held-out test split. See [RESULTS_REPORT.md](RESULTS_REPORT.md) and [reproducibility details](reproducibility/README.md).
+With the environment activated, simply use `python app.py`. This starts Streamlit on loopback and opens your browser, normally at http://127.0.0.1:8501. Keep the terminal running; press Ctrl+C to stop. If the browser does not open automatically, use the URL printed in the terminal.
+
+For an occupied port: `python app.py --server.port=8502`. Standard Streamlit launch also works: `python -m streamlit run app.py --server.address=127.0.0.1`.
+
+## Inspect an image
+
+1. Upload one JPG/JPEG/PNG, up to 10 MiB and 20 megapixels decoded.
+2. Set confidence between 0.05 and 0.95 (default 0.25).
+3. Click **Inspect PCB** to view boxes, six-class counts, a short-circuit indicator and detection details.
+4. Compare original and annotated images and download the annotated PNG or detection CSV.
+
+After changing confidence, click **Inspect PCB** again. A notice identifies results generated at an earlier threshold. Uploading a new image clears the previous result. Images and downloads remain in session memory rather than an upload directory.
+
+No detections means no boxes met the chosen threshold; it is not a quality-control pass or electrical-continuity measurement. Prediction time includes preprocessing, prediction and postprocessing, excluding first model load, image decoding and display rendering.
+
+## Model and evidence
+
+The only dashboard model is `weights/aw09_best.pt`, checked against its fixed SHA-256 before loading. Restore the published file if verification fails. The model panel displays saved results from `weights/aw09_metadata.json`; it does not measure accuracy on your uploaded image. See [AW09_MODEL_CARD.md](AW09_MODEL_CARD.md).
+
+The older notebook and [RESULTS_REPORT.md](RESULTS_REPORT.md) preserve the historical Original/Trial040 grouped-v1 comparison, separate from AW09's balanced6000 experiment. Optional training defaults remain off. The notebook generation step uses `model_code/app_template.py`, so regenerating `app.py` retains AW09. Use the direct launch command when you only need the dashboard.
+
+## Developer checks
+
+```powershell
+& .\.venv\Scripts\python.exe model_code\generate_app.py --output app.py
+& .\.venv\Scripts\python.exe -m pytest reproducibility\tests\test_inspector_core.py reproducibility\tests\test_app_generation.py reproducibility\tests\test_aw09_dashboard.py reproducibility\tests\test_notebook_contract.py -q
+```
+
+These checks do not train or evaluate dataset splits. Edit the canonical template rather than generated `app.py` alone. Keep historical Trial040 APIs used by the comparison notebook.

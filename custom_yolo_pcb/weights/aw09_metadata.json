@@ -1,0 +1,152 @@
+{
+  "candidate_id": "AW09",
+  "architecture": "YOLOv8n",
+  "optimizer": "AdamW",
+  "lr0": 0.01,
+  "weight_decay": 0.001,
+  "best_epoch": 38,
+  "epochs_completed": 100,
+  "checkpoint_sha256": "21650e4249bded2bcc974922c705a1ea29c066671017a00177ca8eca27a6a1c0",
+  "dataset": "balanced6000_20261007",
+  "split_images": {
+    "train": 4800,
+    "validation": 600,
+    "test": 600
+  },
+  "ranking_metric": "clean validation mAP50\u201395",
+  "validation": {
+    "precision": 0.9674490974627744,
+    "recall": 0.9771629111362463,
+    "f1": 0.9722817428592678,
+    "map50": 0.9885180746085592,
+    "map50_95": 0.5389454885300056,
+    "per_class": [
+      {
+        "ap50": 0.9947593719515028,
+        "ap50_95": 0.6064702163660418,
+        "class_id": 0,
+        "class_name": "missing_hole",
+        "precision": 0.9817775914759191,
+        "recall": 0.9903846153846154
+      },
+      {
+        "ap50": 0.979461998836173,
+        "ap50_95": 0.5268382906519997,
+        "class_id": 1,
+        "class_name": "mouse_bite",
+        "precision": 0.9811634889565192,
+        "recall": 0.9470664855915707
+      },
+      {
+        "ap50": 0.9932204779347636,
+        "ap50_95": 0.5261009029361212,
+        "class_id": 2,
+        "class_name": "open_circuit",
+        "precision": 0.9723440769767755,
+        "recall": 0.9959016393442623
+      },
+      {
+        "ap50": 0.9904594213650427,
+        "ap50_95": 0.508164503755264,
+        "class_id": 3,
+        "class_name": "short",
+        "precision": 0.9616458389582571,
+        "recall": 0.9750605653521507
+      },
+      {
+        "ap50": 0.9836695799624805,
+        "ap50_95": 0.4997868657542696,
+        "class_id": 4,
+        "class_name": "spur",
+        "precision": 0.9948909233090936,
+        "recall": 0.9545641611448781
+      },
+      {
+        "ap50": 0.9895375976013929,
+        "ap50_95": 0.5663121517163374,
+        "class_id": 5,
+        "class_name": "spurious_copper",
+        "precision": 0.912872665100082,
+        "recall": 1.0
+      }
+    ]
+  },
+  "test": {
+    "precision": 0.9505029208434838,
+    "recall": 0.9481150466882768,
+    "f1": 0.9493074821623247,
+    "map50": 0.956716411566925,
+    "map50_95": 0.4673596481511472,
+    "per_class": [
+      {
+        "ap50": 0.952708130865078,
+        "ap50_95": 0.5654585671963785,
+        "class_id": 0,
+        "class_name": "missing_hole",
+        "precision": 0.9139739255892584,
+        "recall": 0.9947916666666666
+      },
+      {
+        "ap50": 0.9714324942042185,
+        "ap50_95": 0.48024317092499746,
+        "class_id": 1,
+        "class_name": "mouse_bite",
+        "precision": 0.9272040271260762,
+        "recall": 0.9767441860465116
+      },
+      {
+        "ap50": 0.995,
+        "ap50_95": 0.4316825107596937,
+        "class_id": 2,
+        "class_name": "open_circuit",
+        "precision": 0.9973878799302213,
+        "recall": 0.993421052631579
+      },
+      {
+        "ap50": 0.8713778680428292,
+        "ap50_95": 0.3838329567012018,
+        "class_id": 3,
+        "class_name": "short",
+        "precision": 0.938825783710069,
+        "recall": 0.8370989244746896
+      },
+      {
+        "ap50": 0.9660898240394924,
+        "ap50_95": 0.4553883322581361,
+        "class_id": 4,
+        "class_name": "spur",
+        "precision": 0.9736601072211143,
+        "recall": 0.924134450310214
+      },
+      {
+        "ap50": 0.9836901522499314,
+        "ap50_95": 0.48755235106647615,
+        "class_id": 5,
+        "class_name": "spurious_copper",
+        "precision": 0.9519658014841627,
+        "recall": 0.9625
+      }
+    ]
+  },
+  "evaluation_settings": {
+    "augment": false,
+    "batch": 3,
+    "conf": 0.001,
+    "imgsz": 1024,
+    "iou": 0.7,
+    "max_det": 300,
+    "plots": false,
+    "split": "test",
+    "workers": 0
+  },
+  "sources": {
+    "validation": "results/optimizer_grid18_20261012_193800/metrics/AW09_clean_validation.json",
+    "training": "results/optimizer_grid18_20261012_193800/metrics/AW09_training.json",
+    "test": "results/optimizer_grid18_final_test_20261021/AW09_test.json"
+  },
+  "limitations": [
+    "One recorded run per configuration; no multi-seed uncertainty estimate.",
+    "The existing held-out test split was exposed in earlier project work.",
+    "Best overall by validation mAP50\u201395 does not mean best for every class or metric."
+  ]
+}

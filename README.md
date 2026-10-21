@@ -1,15 +1,19 @@
-# YOLOv8n PCB defect detection comparison
+# AW09 PCB Quality Inspector
 
-A private, local Windows FYP project comparing the original YOLOv8n baseline with the Selected Enhanced YOLOv8n.
+A local Streamlit PCB inspection dashboard using **AW09 YOLOv8n**. This GitHub repository is public; the dashboard runs on your own computer.
 
 ## Start here
 
-1. Open [PCB_Quality_Inspector.ipynb](custom_yolo_pcb/PCB_Quality_Inspector.ipynb) in VS Code.
-2. Select the project `.venv` Python kernel.
-3. Click **Run All** to verify the package, view the recorded comparison, generate `app.py`, and start the local PCB inspector.
+1. Open `custom_yolo_pcb` and follow the [setup guide](custom_yolo_pcb/README.md).
+2. Run `python app.py` with the project Python environment.
+3. The dashboard opens locally in your browser. Upload a JPG/PNG, choose confidence and click **Inspect PCB**. Stop it with Ctrl+C in the terminal.
 
-The [beginner guide](custom_yolo_pcb/README.md) explains setup. The [results report](custom_yolo_pcb/RESULTS_REPORT.md) contains the matched validation results, training curves, per-class metrics, confusion matrices, and examples.
+No dataset download, notebook execution, training or cloud deployment is required. The app includes hash-verified AW09 weights, six-class detection, a short-circuit indicator, annotated PNG/CSV downloads and recorded validation/test results.
 
-Private `v1.1.0` introduced the notebook and local app. The unchanged private `v1.0.0` release remains the source of the dataset archive.
+AW09 uses AdamW, learning rate 0.01 and weight decay 0.001. Its epoch-38 checkpoint ranks highest by clean validation mAP50–95 in the completed 18-run balanced6000 grid: **53.89% validation** and **46.74% test**. See the [model card](custom_yolo_pcb/AW09_MODEL_CARD.md) for provenance and limits.
 
-The Selected Enhanced YOLOv8n and the original were evaluated on the same frozen 3,416-image grouped-v1 validation manifest with identical settings. The enhanced model reaches 0.814235 mAP50-95 versus 0.529946 for the original. Their training recipes differ, so this is a fair model comparison but not a one-variable ablation. No held-out test split was evaluated.
+## Historical comparison notebook
+
+[PCB_Quality_Inspector.ipynb](custom_yolo_pcb/PCB_Quality_Inspector.ipynb) preserves the earlier Original/Trial040 grouped-v1 comparison. It also regenerates the current AW09 dashboard. Optional historical training remains disabled by default and is separate from dashboard use.
+
+The [historical results report](custom_yolo_pcb/RESULTS_REPORT.md) compares Original and Trial040 on 3,416 grouped-v1 validation images: mAP50–95 of 0.529946 and 0.814235, respectively. Their training recipes differ; this is not a one-variable ablation. That historical comparison did not evaluate a held-out test split. Its metrics must not be relabelled as AW09 results, which use a different dataset preparation. The earlier v1.0.0 dataset release is needed only for the historical notebook workflow.

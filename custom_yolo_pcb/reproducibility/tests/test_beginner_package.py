@@ -21,13 +21,13 @@ def test_only_four_tracked_root_entries():
     assert {n.split('/')[0] for n in names} == {'.gitignore', '.gitattributes', 'README.md', 'custom_yolo_pcb'}
 
 
-def test_beginner_files_and_three_visible_weights():
+def test_beginner_files_and_four_visible_weights():
     for name in (
         'PCB_Quality_Inspector.ipynb', 'app.py', 'README.md', 'RESULTS_REPORT.md',
-        'train_local.py', 'prepare_dataset.ps1', 'requirements.txt',
+        'train_local.py', 'prepare_dataset.ps1', 'requirements.txt', 'AW09_MODEL_CARD.md',
     ):
         assert (PACKAGE / name).is_file(), name
-    assert {p.name for p in (PACKAGE / 'weights').glob('*.pt')} == {'original_best.pt', 'trial040_best.pt', 'yolov8n.pt'}
+    assert {p.name for p in (PACKAGE / 'weights').glob('*.pt')} == {'original_best.pt', 'trial040_best.pt', 'yolov8n.pt', 'aw09_best.pt'}
     assert {p.name for p in (PACKAGE / 'reproducibility/checkpoints').glob('*.pt')} == {'original_last.pt', 'trial040_last.pt'}
 
 
@@ -41,21 +41,21 @@ def test_notebook_and_streamlit_dependencies_are_pinned():
     assert expected.issubset(set(requirements))
 
 
-def test_beginner_docs_make_notebook_primary_and_preserve_release_boundary():
+def test_beginner_docs_make_local_dashboard_primary_and_preserve_history():
     root_readme = (ROOT / 'README.md').read_text(encoding='utf-8')
     package_readme = (PACKAGE / 'README.md').read_text(encoding='utf-8')
-    for text in ('PCB_Quality_Inspector.ipynb', 'Select Kernel', 'Run All', 'streamlit run app.py'):
+    for text in ('python app.py', 'streamlit run app.py', 'AW09_MODEL_CARD.md', 'Original/Trial040', 'Optional training defaults remain off'):
         assert text in package_readme
-    assert 'v1.1.0' in root_readme
+    assert 'PCB_Quality_Inspector.ipynb' in root_readme
     assert 'v1.0.0' in root_readme
-    assert 'Vercel' in package_readme and 'not' in package_readme
+    assert 'No dataset download or model training is required' in package_readme
 
 
 def test_no_duplicate_checkpoints_or_obsolete_presentation():
     candidates = subprocess.check_output(['git', 'ls-files', '--cached', '--others', '--exclude-standard'], cwd=ROOT, text=True).splitlines()
     weights = [ROOT / name for name in candidates if name.endswith('.pt') and (ROOT / name).is_file()]
-    assert len(weights) == 5
-    assert len({hashlib.sha256(p.read_bytes()).hexdigest() for p in weights}) == 5
+    assert len(weights) == 6
+    assert len({hashlib.sha256(p.read_bytes()).hexdigest() for p in weights}) == 6
     for name in ('.github', '.vscode', 'docs', 'PRIVATE_USE_NOTICE.md', 'DATASET_PROVENANCE.md'):
         assert not (ROOT / name).exists()
     assert not list(PACKAGE.rglob('methodology.md'))
@@ -92,7 +92,7 @@ def test_recorded_comparison_uses_one_validation_contract():
     }
 
 
-def test_public_surfaces_use_selected_enhanced_name_with_internal_traceability():
+def test_public_surfaces_distinguish_aw09_from_historical_comparison():
     root_readme = (ROOT / 'README.md').read_text(encoding='utf-8')
     package_readme = (PACKAGE / 'README.md').read_text(encoding='utf-8')
     report = (PACKAGE / 'RESULTS_REPORT.md').read_text(encoding='utf-8')
@@ -100,9 +100,13 @@ def test_public_surfaces_use_selected_enhanced_name_with_internal_traceability()
     notebook_builder = (PACKAGE / 'reproducibility/scripts/build_notebook.py').read_text(encoding='utf-8')
     chart_builder = (PACKAGE / 'reproducibility/generate_charts.py').read_text(encoding='utf-8')
 
-    for surface in (root_readme, package_readme, report, app_template, notebook_builder):
+    for surface in (root_readme, package_readme, app_template, notebook_builder):
+        assert 'AW09' in surface
+    for surface in (report, notebook_builder):
         assert 'Selected Enhanced YOLOv8n' in surface
         assert 'Enhanced Trial 040' not in surface
+    assert 'verify_aw09_checkpoint' in app_template
+    assert 'verify_trial040_checkpoint' not in app_template
     assert "('Enhanced YOLOv8n', 'trial040', 'trial040')" in chart_builder
     assert 'public name for internal candidate `Trial 040`' in report
     assert '`weights/trial040_best.pt`' in report
